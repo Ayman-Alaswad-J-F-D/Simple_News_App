@@ -18,7 +18,7 @@ class GeneralScreen extends StatelessWidget {
     return BlocConsumer<NewAppCubit, NewAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var list = NewAppCubit.get(context).page1;
+        var list = NewAppCubit.get(context).generalList;
         return ScreenTypeLayout(
           mobile: Builder(
             builder: (BuildContext context) {
@@ -54,14 +54,13 @@ class GeneralScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(15.0),
                                   // ignore: unnecessary_null_comparison
                                   child: list[NewAppCubit.get(context)
-                                                  .page1SelectedItem]
-                                              ['urlToImage'] ==
+                                              .selectedItem]['urlToImage'] ==
                                           null
                                       ? Icon(Icons.image_not_supported_rounded,
                                           size: 80)
                                       : Image.network(
                                           list[NewAppCubit.get(context)
-                                              .page1SelectedItem]['urlToImage'],
+                                              .selectedItem]['urlToImage'],
                                           errorBuilder: (BuildContext context,
                                               Object exception,
                                               StackTrace? stackTrace) {
@@ -77,7 +76,7 @@ class GeneralScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 20),
                               Text(
-                                '${list[NewAppCubit.get(context).page1SelectedItem]['title']}',
+                                '${list[NewAppCubit.get(context).selectedItem]['title']}',
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -85,7 +84,7 @@ class GeneralScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                '${list[NewAppCubit.get(context).page1SelectedItem]['description']}',
+                                '${list[NewAppCubit.get(context).selectedItem]['description']}',
                                 maxLines: 4,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -93,7 +92,7 @@ class GeneralScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                '${list[NewAppCubit.get(context).page1SelectedItem]['publishedAt']}',
+                                '${list[NewAppCubit.get(context).selectedItem]['publishedAt']}',
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                             ],

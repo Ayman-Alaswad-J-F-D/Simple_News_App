@@ -7,7 +7,7 @@ import 'package:new_app/shared/cubit/cubit.dart';
 Widget buildArticalItme(article, context, index) {
   var imageUrl = '${article['urlToImage']}';
   return Container(
-    color: NewAppCubit.get(context).page1SelectedItem == index &&
+    color: NewAppCubit.get(context).selectedItem == index &&
             NewAppCubit.get(context).isDesktop
         ? Theme.of(context).cardColor
         : null,
