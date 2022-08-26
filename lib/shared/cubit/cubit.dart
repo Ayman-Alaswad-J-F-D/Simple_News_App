@@ -70,7 +70,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
   }
 
   void getPage1() async {
-    emit(NewAppGetPage1LodingState());
+    emit(NewAppGetGeneralLodingState());
     await DioHelper.getData(
       url: 'v2/top-headlines',
       query: {
@@ -83,18 +83,18 @@ class NewAppCubit extends Cubit<NewAppStates> {
         generalList = value.data["articles"];
         print(value.data["articles"][0]["title"]);
         // print(page1[0]['title']);
-        emit(NewAppGetPage1SuccessState());
+        emit(NewAppGetGeneralSuccessState());
       },
     ).catchError(
       (error) {
         print(error.toString());
-        emit(NewAppGetPage1ErrorState(error.toString()));
+        emit(NewAppGetGeneralErrorState(error.toString()));
       },
     );
   }
 
   void getPage2() async {
-    emit(NewAppGetPage2LodingState());
+    emit(NewAppGetSportsLodingState());
     if (sportList.isEmpty) {
       await DioHelper.getData(
         url: 'v2/top-headlines',
@@ -109,21 +109,21 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
           print(value.data["articles"][0]["title"]);
           // print(page1[0]['title']);
-          emit(NewAppGetPage2SuccessState());
+          emit(NewAppGetSportsSuccessState());
         },
       ).catchError(
         (error) {
           print(error.toString());
-          emit(NewAppGetPage2ErrorState(error.toString()));
+          emit(NewAppGetSportsErrorState(error.toString()));
         },
       );
     } else {
-      emit(NewAppGetPage2SuccessState());
+      emit(NewAppGetSportsSuccessState());
     }
   }
 
   void getPage3() async {
-    emit(NewAppGetPage3LodingState());
+    emit(NewAppGetTechnologyLodingState());
     if (technologyList.isEmpty) {
       await DioHelper.getData(
         url: 'v2/top-headlines',
@@ -138,16 +138,16 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
           print(value.data["articles"][0]["title"]);
           // print(page1[0]['title']);
-          emit(NewAppGetPage3SuccessState());
+          emit(NewAppGetTechnologySuccessState());
         },
       ).catchError(
         (error) {
           print(error.toString());
-          emit(NewAppGetPage3ErrorState(error.toString()));
+          emit(NewAppGetTechnologyErrorState(error.toString()));
         },
       );
     } else {
-      emit(NewAppGetPage3SuccessState());
+      emit(NewAppGetTechnologySuccessState());
     }
   }
 
