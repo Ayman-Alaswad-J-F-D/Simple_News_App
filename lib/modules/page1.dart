@@ -10,8 +10,8 @@ import '../shared/cubit/states.dart';
 
 // General
 
-class Page1Screen extends StatelessWidget {
-  Page1Screen({Key? key}) : super(key: key);
+class GeneralScreen extends StatelessWidget {
+  GeneralScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

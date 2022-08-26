@@ -7,8 +7,8 @@ import '../shared/components/components.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
-class Page3Screen extends StatelessWidget {
-  Page3Screen({Key? key}) : super(key: key);
+class TechnologyScreen extends StatelessWidget {
+  TechnologyScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -48,9 +48,9 @@ class NewAppCubit extends Cubit<NewAppStates> {
   }
 
   List<Widget> screens = [
-    Page1Screen(),
-    Page2Screen(),
-    Page3Screen(),
+    GeneralScreen(),
+    SportsScreen(),
+    TechnologyScreen(),
   ];
 
   List<dynamic> page1 = [];

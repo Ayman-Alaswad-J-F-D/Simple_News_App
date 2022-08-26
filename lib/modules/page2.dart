@@ -7,8 +7,8 @@ import '../shared/components/components.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
-class Page2Screen extends StatelessWidget {
-  Page2Screen({Key? key}) : super(key: key);
+class SportsScreen extends StatelessWidget {
+  SportsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
