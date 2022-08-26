@@ -14,7 +14,7 @@ Widget buildArticalItme(article, context, index) {
     child: InkWell(
       onTap: () {
         // navigateTo(context, WebViewScreen(article['url']));
-        NewAppCubit.get(context).selectItemPage1Item(index);
+        NewAppCubit.get(context).selectItemBuilder(index);
       },
       child: Padding(
         padding: const EdgeInsets.all(20.0),

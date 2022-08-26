@@ -64,7 +64,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
   }
 
   int selectedItem = 0;
-  void selectItemPage1Item(index) {
+  void selectItemBuilder(index) {
     selectedItem = index;
     emit(NewAppSelectPage1ItemState());
   }
