@@ -8,6 +8,8 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
+// General
+
 class Page1Screen extends StatelessWidget {
   Page1Screen({Key? key}) : super(key: key);
 
