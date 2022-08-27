@@ -9,6 +9,7 @@ import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
 // General
+// hayyy
 
 class GeneralScreen extends StatelessWidget {
   GeneralScreen({Key? key}) : super(key: key);
