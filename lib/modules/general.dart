@@ -8,9 +8,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
-// General
-// hayyy
-// hayyy
+//  General Screen  //
 
 class GeneralScreen extends StatelessWidget {
   GeneralScreen({Key? key}) : super(key: key);
