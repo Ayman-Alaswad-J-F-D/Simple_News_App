@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable, deprecated_member_use, prefer_const_constructors_in_immutables
-
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +10,6 @@ import 'package:new_app/shared/network/local/cache_helper.dart';
 import 'package:new_app/shared/network/remote/dio_helper.dart';
 import 'package:new_app/shared/themes/themes.dart';
 import 'package:page_transition/page_transition.dart';
-// import 'package:responsive_builder/responsive_builder.dart';
-
-// Hello GitHub 00
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +18,12 @@ void main() async {
   // if (Platform.isWindows) {
   //   await DesktopWindow.setMinWindowSize(Size(500, 700));
   // }
+  // final url = "https://www.google.com";
+  // Webview(true)
+  //     .setTitle("title")
+  //     .setSize(1280, 800, SizeHint.none)
+  //     .navigate(url)
+  //     .run();
 
   await CacheHelper.init();
   bool? isDark = CacheHelper.getData(key: 'isDark');
@@ -105,9 +106,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => NewAppCubit()
-            ..getPage1()
-            ..getPage2()
-            ..getPage3(),
+            ..getGeneralData()
+            ..getSportsData()
+            ..getTechnologyData(),
         ),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
