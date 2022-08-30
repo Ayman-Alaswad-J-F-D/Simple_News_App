@@ -42,8 +42,8 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
   void changeBottomNavBar(int index) {
     currentIndex = index;
-    if (index == 1) return getPage2();
-    if (index == 2) return getPage3();
+    if (index == 1) return getSportsData();
+    if (index == 2) return getTechnologyData();
     emit(NewAppBottomNavState());
   }
 
@@ -69,7 +69,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
     emit(NewAppSelectPage1ItemState());
   }
 
-  void getPage1() async {
+  void getGeneralData() async {
     emit(NewAppGetGeneralLodingState());
     await DioHelper.getData(
       url: 'v2/top-headlines',
@@ -93,7 +93,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
     );
   }
 
-  void getPage2() async {
+  void getSportsData() async {
     emit(NewAppGetSportsLodingState());
     if (sportList.isEmpty) {
       await DioHelper.getData(
@@ -122,7 +122,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
     }
   }
 
-  void getPage3() async {
+  void getTechnologyData() async {
     emit(NewAppGetTechnologyLodingState());
     if (technologyList.isEmpty) {
       await DioHelper.getData(

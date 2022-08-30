@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -20,13 +18,109 @@ class TechnologyScreen extends StatelessWidget {
         return ScreenTypeLayout(
           mobile: Builder(
             builder: (BuildContext context) {
-              NewAppCubit.get(context).setDesktop(false);
+              NewAppCubit.get(context).isDesktop == false
+                  ? articlesBuilder(list, context)
+                  : NewAppCubit.get(context).setDesktop(false);
               return articlesBuilder(list, context);
             },
           ),
           desktop: Builder(
             builder: (BuildContext context) {
-              NewAppCubit.get(context).setDesktop(true);
+              NewAppCubit.get(context).isDesktop
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: articlesBuilder(list, context),
+                        ),
+                        if (list.length > 0)
+                          Expanded(
+                            child: Container(
+                              color: Theme.of(context).cardColor,
+                              height: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsets.all(25.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 300,
+                                      width: double.infinity,
+                                      // color: Colors.'grey',
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        // ignore: unnecessary_null_comparison
+                                        child: list[NewAppCubit.get(context)
+                                                        .selectedItem]
+                                                    ['urlToImage'] ==
+                                                null
+                                            ? Icon(
+                                                Icons
+                                                    .image_not_supported_rounded,
+                                                size: 140)
+                                            : Image.network(
+                                                list[NewAppCubit.get(context)
+                                                        .selectedItem]
+                                                    ['urlToImage'],
+                                                errorBuilder: (BuildContext
+                                                        context,
+                                                    Object exception,
+                                                    StackTrace? stackTrace) {
+                                                  return const Icon(
+                                                    Icons
+                                                        .image_not_supported_rounded,
+                                                    size: 100,
+                                                    color: Colors.grey,
+                                                  );
+                                                },
+                                                fit: BoxFit.cover,
+                                              ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      '${list[NewAppCubit.get(context).selectedItem]['title']}',
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 24, color: Colors.black),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      list[NewAppCubit.get(context)
+                                                      .selectedItem]
+                                                  ['description'] ==
+                                              null
+                                          ? 'No Found Description'
+                                          : '${list[NewAppCubit.get(context).selectedItem]['description']}',
+                                      maxLines: 4,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.grey.shade600),
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '${list[NewAppCubit.get(context).selectedItem]['publishedAt']}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    )
+                  : NewAppCubit.get(context).setDesktop(true);
 
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +149,7 @@ class TechnologyScreen extends StatelessWidget {
                                               .selectedItem]['urlToImage'] ==
                                           null
                                       ? Icon(Icons.image_not_supported_rounded,
-                                          size: 80)
+                                          size: 140)
                                       : Image.network(
                                           list[NewAppCubit.get(context)
                                               .selectedItem]['urlToImage'],
@@ -82,16 +176,27 @@ class TechnologyScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                '${list[NewAppCubit.get(context).selectedItem]['description']}',
+                                list[NewAppCubit.get(context).selectedItem]
+                                            ['description'] ==
+                                        null
+                                    ? 'No Found Description'
+                                    : '${list[NewAppCubit.get(context).selectedItem]['description']}',
                                 maxLines: 4,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 17, color: Colors.grey.shade600),
                               ),
-                              const SizedBox(height: 10),
-                              Text(
-                                '${list[NewAppCubit.get(context).selectedItem]['publishedAt']}',
-                                style: Theme.of(context).textTheme.bodyText2,
+                              const SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${list[NewAppCubit.get(context).selectedItem]['publishedAt']}',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
                               ),
                             ],
                           ),

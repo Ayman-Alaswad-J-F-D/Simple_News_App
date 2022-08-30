@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:new_app/layout/new_app.dart';
+import 'package:new_app/modules/web_view.dart';
 import 'package:new_app/shared/cubit/cubit.dart';
-
-// import '../../modules/web_view.dart';
 
 Widget buildArticalItme(article, context, index) {
   var imageUrl = '${article['urlToImage']}';
@@ -13,8 +11,11 @@ Widget buildArticalItme(article, context, index) {
         : null,
     child: InkWell(
       onTap: () {
-        // navigateTo(context, WebViewScreen(article['url']));
-        NewAppCubit.get(context).selectItemBuilder(index);
+        if (NewAppCubit.get(context).isDesktop == true) {
+          NewAppCubit.get(context).selectItemBuilder(index);
+        } else {
+          navigateTo(context, WebViewScreen(article['url']));
+        }
       },
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -78,13 +79,6 @@ Widget buildArticalItme(article, context, index) {
 
 //////////////////
 
-Widget myDivider() => const Padding(
-      padding: EdgeInsets.only(left: 20.0),
-      child: Divider(),
-    );
-
-//////////////////////////
-
 Widget articlesBuilder(List list, context, {isSearch = false}) =>
     list.isNotEmpty
         ? ListView.separated(
@@ -101,6 +95,8 @@ Widget articlesBuilder(List list, context, {isSearch = false}) =>
                 color: Colors.grey,
               )
             : const Center(child: CircularProgressIndicator());
+
+/////////////////////////////
 
 Widget myTextFormField({
   required TextEditingController textEditingController,
@@ -154,6 +150,11 @@ Widget myTextFormField({
               )
             : null,
       ),
+    );
+
+Widget myDivider() => const Padding(
+      padding: EdgeInsets.only(left: 20.0),
+      child: Divider(),
     );
 
 void navigateTo(context, widget) => Navigator.push(
