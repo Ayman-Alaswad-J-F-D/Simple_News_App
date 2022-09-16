@@ -14,8 +14,6 @@ import 'package:new_app/shared/themes/themes.dart';
 import 'package:page_transition/page_transition.dart';
 // import 'package:responsive_builder/responsive_builder.dart';
 
-// Hello GitHub 00
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
