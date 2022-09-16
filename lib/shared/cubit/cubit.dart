@@ -4,9 +4,9 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/modules/page1.dart';
-import 'package:new_app/modules/page2.dart';
-import 'package:new_app/modules/page3.dart';
+import 'package:new_app/modules/general.dart';
+import 'package:new_app/modules/sports.dart';
+import 'package:new_app/modules/technology.dart';
 import 'package:new_app/shared/cubit/states.dart';
 
 import '../network/remote/dio_helper.dart';
@@ -42,20 +42,20 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
   void changeBottomNavBar(int index) {
     currentIndex = index;
-    if (index == 1) return getPage2();
-    if (index == 2) return getPage3();
+    if (index == 1) return getSportsData();
+    if (index == 2) return getTechnologyData();
     emit(NewAppBottomNavState());
   }
 
   List<Widget> screens = [
-    Page1Screen(),
-    Page2Screen(),
-    Page3Screen(),
+    GeneralScreen(),
+    SportsScreen(),
+    TechnologyScreen(),
   ];
 
-  List<dynamic> page1 = [];
-  List<dynamic> page2 = [];
-  List<dynamic> page3 = [];
+  List<dynamic> generalList = [];
+  List<dynamic> sportList = [];
+  List<dynamic> technologyList = [];
   bool isDesktop = false;
 
   void setDesktop(bool value) {
@@ -63,14 +63,14 @@ class NewAppCubit extends Cubit<NewAppStates> {
     emit(NewAppSetDesktopState());
   }
 
-  int page1SelectedItem = 0;
-  void selectItemPage1Item(index) {
-    page1SelectedItem = index;
+  int selectedItem = 0;
+  void selectItemBuilder(index) {
+    selectedItem = index;
     emit(NewAppSelectPage1ItemState());
   }
 
-  void getPage1() async {
-    emit(NewAppGetPage1LodingState());
+  void getGeneralData() async {
+    emit(NewAppGetGeneralLodingState());
     await DioHelper.getData(
       url: 'v2/top-headlines',
       query: {
@@ -80,22 +80,22 @@ class NewAppCubit extends Cubit<NewAppStates> {
       },
     ).then(
       (value) {
-        page1 = value.data["articles"];
+        generalList = value.data["articles"];
         print(value.data["articles"][0]["title"]);
         // print(page1[0]['title']);
-        emit(NewAppGetPage1SuccessState());
+        emit(NewAppGetGeneralSuccessState());
       },
     ).catchError(
       (error) {
         print(error.toString());
-        emit(NewAppGetPage1ErrorState(error.toString()));
+        emit(NewAppGetGeneralErrorState(error.toString()));
       },
     );
   }
 
-  void getPage2() async {
-    emit(NewAppGetPage2LodingState());
-    if (page2.isEmpty) {
+  void getSportsData() async {
+    emit(NewAppGetSportsLodingState());
+    if (sportList.isEmpty) {
       await DioHelper.getData(
         url: 'v2/top-headlines',
         query: {
@@ -105,26 +105,26 @@ class NewAppCubit extends Cubit<NewAppStates> {
         },
       ).then(
         (value) {
-          page2 = value.data["articles"];
+          sportList = value.data["articles"];
 
           print(value.data["articles"][0]["title"]);
           // print(page1[0]['title']);
-          emit(NewAppGetPage2SuccessState());
+          emit(NewAppGetSportsSuccessState());
         },
       ).catchError(
         (error) {
           print(error.toString());
-          emit(NewAppGetPage2ErrorState(error.toString()));
+          emit(NewAppGetSportsErrorState(error.toString()));
         },
       );
     } else {
-      emit(NewAppGetPage2SuccessState());
+      emit(NewAppGetSportsSuccessState());
     }
   }
 
-  void getPage3() async {
-    emit(NewAppGetPage3LodingState());
-    if (page3.isEmpty) {
+  void getTechnologyData() async {
+    emit(NewAppGetTechnologyLodingState());
+    if (technologyList.isEmpty) {
       await DioHelper.getData(
         url: 'v2/top-headlines',
         query: {
@@ -134,20 +134,20 @@ class NewAppCubit extends Cubit<NewAppStates> {
         },
       ).then(
         (value) {
-          page3 = value.data["articles"];
+          technologyList = value.data["articles"];
 
           print(value.data["articles"][0]["title"]);
           // print(page1[0]['title']);
-          emit(NewAppGetPage3SuccessState());
+          emit(NewAppGetTechnologySuccessState());
         },
       ).catchError(
         (error) {
           print(error.toString());
-          emit(NewAppGetPage3ErrorState(error.toString()));
+          emit(NewAppGetTechnologyErrorState(error.toString()));
         },
       );
     } else {
-      emit(NewAppGetPage3SuccessState());
+      emit(NewAppGetTechnologySuccessState());
     }
   }
 

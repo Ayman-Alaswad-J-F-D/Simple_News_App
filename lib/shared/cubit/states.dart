@@ -4,31 +4,31 @@ class NewAppInitialState extends NewAppStates {}
 
 class NewAppBottomNavState extends NewAppStates {}
 
-class NewAppGetPage1LodingState extends NewAppStates {}
+class NewAppGetGeneralLodingState extends NewAppStates {}
 
-class NewAppGetPage1SuccessState extends NewAppStates {}
+class NewAppGetGeneralSuccessState extends NewAppStates {}
 
-class NewAppGetPage1ErrorState extends NewAppStates {
+class NewAppGetGeneralErrorState extends NewAppStates {
   final String error;
-  NewAppGetPage1ErrorState(this.error);
+  NewAppGetGeneralErrorState(this.error);
 }
 
-class NewAppGetPage2LodingState extends NewAppStates {}
+class NewAppGetSportsLodingState extends NewAppStates {}
 
-class NewAppGetPage2SuccessState extends NewAppStates {}
+class NewAppGetSportsSuccessState extends NewAppStates {}
 
-class NewAppGetPage2ErrorState extends NewAppStates {
+class NewAppGetSportsErrorState extends NewAppStates {
   final String error;
-  NewAppGetPage2ErrorState(this.error);
+  NewAppGetSportsErrorState(this.error);
 }
 
-class NewAppGetPage3LodingState extends NewAppStates {}
+class NewAppGetTechnologyLodingState extends NewAppStates {}
 
-class NewAppGetPage3SuccessState extends NewAppStates {}
+class NewAppGetTechnologySuccessState extends NewAppStates {}
 
-class NewAppGetPage3ErrorState extends NewAppStates {
+class NewAppGetTechnologyErrorState extends NewAppStates {
   final String error;
-  NewAppGetPage3ErrorState(this.error);
+  NewAppGetTechnologyErrorState(this.error);
 }
 
 class NewAppGetSearchLodingState extends NewAppStates {}

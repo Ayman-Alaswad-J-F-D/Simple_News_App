@@ -1,7 +1,10 @@
 {
     "editor.tokenColorCustomizations": {
-        "comments": "",
+        "comments": "#FF0000",
         "textMateRules": []
     },
-    "C_Cpp.errorSquiggles": "Enabled"
+    "C_Cpp.errorSquiggles": "Enabled",
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "master"
+    ]
 }
