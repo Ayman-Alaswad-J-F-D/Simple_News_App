@@ -1,7 +1,6 @@
 // import 'package:bloc/bloc.dart';
 // ignore_for_file: avoid_print
 
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_app/modules/general.dart';
@@ -19,22 +18,22 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
   int currentIndex = 0;
 
-  List<TabItem> bottomNavItem = [
-    const TabItem(
+  List<BottomNavigationBarItem> bottomNavItem = [
+    const BottomNavigationBarItem(
       icon: Icon(Icons.newspaper_rounded),
-      title: 'General',
+      label: 'General',
     ),
-    const TabItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.sports_football_rounded,
       ),
-      title: 'Sports',
+      label: 'Sports',
     ),
-    const TabItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.psychology_rounded,
       ),
-      title: 'Technology',
+      label: 'Technology',
     ),
   ];
 
