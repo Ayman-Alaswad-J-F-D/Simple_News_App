@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/modules/web_view.dart';
 import 'package:new_app/shared/cubit/cubit.dart';
+
+import '../../modules/web_view.dart';
 
 Widget buildArticalItme(article, context, index) {
   var imageUrl = '${article['urlToImage']}';
@@ -44,9 +45,7 @@ Widget buildArticalItme(article, context, index) {
                       ),
               ),
             ),
-            const SizedBox(
-              width: 20.0,
-            ),
+            const SizedBox(width: 20.0),
             Expanded(
               child: Container(
                 height: 120.0,

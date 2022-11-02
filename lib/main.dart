@@ -57,9 +57,7 @@ class SplashScreen extends StatelessWidget {
               'assets/images/breaking-news-.jpg',
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           RichText(
             text: TextSpan(
               children: [

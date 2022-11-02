@@ -39,6 +39,7 @@ class _NewAppState extends State<NewApp> with SingleTickerProviderStateMixin {
   //   }
   // }
 
+  final PageController controller = PageController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewAppCubit, NewAppStates>(
@@ -87,19 +88,35 @@ class _NewAppState extends State<NewApp> with SingleTickerProviderStateMixin {
               ),
             ],
           ),
-          body: cubit.screens[cubit.currentIndex],
+          body: PageView(
+            controller: controller,
+            allowImplicitScrolling: true,
+            onPageChanged: (value) {
+              cubit.changeBottomNavBar(value);
+            },
+            children: [
+              articlesBuilder(cubit.generalList, context),
+              articlesBuilder(cubit.sportList, context),
+              articlesBuilder(cubit.technologyList, context),
+            ],
+          ),
+          //  cubit.screens[cubit.currentIndex],
           bottomNavigationBar: ConvexAppBar.badge(
             const {1: 'Hot'},
             badgeMargin: const EdgeInsets.only(bottom: 30, right: 30),
             items: cubit.bottomNavItem,
             initialActiveIndex: cubit.currentIndex,
+
+            // onTabNotify:
+            //   cubit.changeBottomNavBar(value)
+            // ,
             backgroundColor: Colors.white,
             elevation: 0.5,
-            style: TabStyle.flip,
+            style: TabStyle.react,
             curveSize: 100,
             activeColor: Colors.indigo,
             onTap: (index) {
-              cubit.changeBottomNavBar(index);
+              controller.jumpToPage(index);
             },
           ),
         );
