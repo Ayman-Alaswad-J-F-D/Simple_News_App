@@ -41,8 +41,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
   void changeBottomNavBar(int index) {
     currentIndex = index;
-    if (index == 1) return getSportsData();
-    if (index == 2) return getTechnologyData();
+    if (index == 2) getTechnologyData();
     emit(NewAppBottomNavState());
   }
 
@@ -75,7 +74,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
       query: {
         'country': 'us',
         'category': 'general',
-        'apiKey': '14229368f6b44500b817708b722a1285',
+        'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
       },
     ).then(
       (value) {
@@ -100,7 +99,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
         query: {
           'country': 'us',
           'category': 'sports',
-          'apiKey': '14229368f6b44500b817708b722a1285',
+          'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
         },
       ).then(
         (value) {
@@ -129,7 +128,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
         query: {
           'country': 'us',
           'category': 'technology',
-          'apiKey': '14229368f6b44500b817708b722a1285',
+          'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
         },
       ).then(
         (value) {
@@ -158,7 +157,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
       url: 'v2/everything',
       query: {
         'q': '$myValue',
-        'apiKey': '14229368f6b44500b817708b722a1285',
+        'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
       },
     ).then(
       (value) {

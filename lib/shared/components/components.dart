@@ -191,7 +191,7 @@ Widget myShimmerAndroid(context) => RefreshIndicator(
           itemCount: 4,
           itemBuilder: (context, index) => Shimmer.fromColors(
             baseColor: Colors.grey.shade100,
-            highlightColor: Colors.white,
+            highlightColor: Colors.white.withOpacity(0.8),
             child: Row(
               children: [
                 Padding(
