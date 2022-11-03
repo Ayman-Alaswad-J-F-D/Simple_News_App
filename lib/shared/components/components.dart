@@ -76,7 +76,7 @@ Widget buildArticalItme(article, context, index) {
   );
 }
 
-//////////////////
+/////////////////////////////
 
 Widget articlesBuilder(List list, context, {isSearch = false}) =>
     list.isNotEmpty
@@ -94,6 +94,87 @@ Widget articlesBuilder(List list, context, {isSearch = false}) =>
                 color: Colors.grey,
               )
             : const Center(child: CircularProgressIndicator());
+
+/////////////////////////////
+
+Widget desktopItem(list, context) => Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: articlesBuilder(list, context),
+        ),
+        if (list.length > 0)
+          Expanded(
+            child: Container(
+              color: Theme.of(context).cardColor,
+              height: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 300,
+                      width: double.infinity,
+                      // color: Colors.'grey',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        // ignore: unnecessary_null_comparison
+                        child: list[NewAppCubit.get(context).selectedItem]
+                                    ['urlToImage'] ==
+                                null
+                            ? Icon(Icons.image_not_supported_rounded, size: 140)
+                            : Image.network(
+                                list[NewAppCubit.get(context).selectedItem]
+                                    ['urlToImage'],
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const Icon(
+                                    Icons.image_not_supported_rounded,
+                                    size: 100,
+                                    color: Colors.grey,
+                                  );
+                                },
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      '${list[NewAppCubit.get(context).selectedItem]['title']}',
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 24, color: Colors.black),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      list[NewAppCubit.get(context).selectedItem]
+                                  ['description'] ==
+                              null
+                          ? 'No Found Description'
+                          : '${list[NewAppCubit.get(context).selectedItem]['description']}',
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(fontSize: 17, color: Colors.grey.shade600),
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${list[NewAppCubit.get(context).selectedItem]['publishedAt']}',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
 
 /////////////////////////////
 
