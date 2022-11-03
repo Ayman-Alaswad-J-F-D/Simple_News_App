@@ -17,7 +17,7 @@ class GeneralScreen extends StatelessWidget {
 
     return BlocConsumer<NewAppCubit, NewAppStates>(
       listener: (context, state) {
-        if (state is NewAppGetGeneralSuccessState ) {
+        if (state is NewAppGetGeneralSuccessState) {
           isLoading = true;
         }
       },

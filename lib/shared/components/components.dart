@@ -230,7 +230,7 @@ Widget myShimmerDesktop(list, context) => Row(
               itemCount: 3,
               itemBuilder: (context, index) => Shimmer.fromColors(
                 baseColor: Colors.grey.shade100,
-                highlightColor: Colors.white,
+                highlightColor: Colors.white.withOpacity(0.8),
                 child: Row(
                   children: [
                     Padding(
@@ -260,7 +260,7 @@ Widget myShimmerDesktop(list, context) => Row(
         Expanded(
           child: Shimmer.fromColors(
             baseColor: Colors.grey.shade100,
-            highlightColor: Colors.white,
+            highlightColor: Colors.white.withOpacity(0.9),
             child: Padding(
               padding: const EdgeInsets.all(17.0),
               child: Column(
