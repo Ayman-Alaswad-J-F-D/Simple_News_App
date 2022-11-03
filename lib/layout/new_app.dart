@@ -39,74 +39,63 @@ class _NewAppState extends State<NewApp> with SingleTickerProviderStateMixin {
   // }
 
   final PageController controller = PageController();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewAppCubit, NewAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = NewAppCubit.get(context);
-
         return Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              title: const Text('Breaking News'),
-              leading: Padding(
-                padding: const EdgeInsets.only(top: 0, left: 4),
-                child: Icon(
-                  Icons.hdr_strong_rounded,
-                  size: 30,
-                ),
+          appBar: AppBar(
+            elevation: 0,
+            title: const Text('Breaking News'),
+            leading: Padding(
+              padding: const EdgeInsets.only(top: 0, left: 4),
+              child: Icon(Icons.hdr_strong_rounded, size: 30),
+            ),
+            // leading: Padding(
+            //   padding: const EdgeInsets.only(top: 5, left: 8),
+            //   child: GestureDetector(
+            //     onTap: _iconTapped,
+            //     child: AnimatedIcon(
+            //       icon: AnimatedIcons.list_view,
+            //       progress: _animatedLeading,
+            //       size: 40,
+            //     ),
+            //   ),
+            // ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  navigateTo(context, SearchScreen());
+                },
+                icon: const Icon(Icons.search_rounded),
               ),
-              // leading: Padding(
-              //   padding: const EdgeInsets.only(top: 5, left: 8),
-              //   child: GestureDetector(
-              //     onTap: _iconTapped,
-              //     child: AnimatedIcon(
-              //       icon: AnimatedIcons.list_view,
-              //       progress: _animatedLeading,
-              //       size: 40,
-              //     ),
-              //   ),
-              // ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    navigateTo(context, SearchScreen());
-                  },
-                  icon: const Icon(
-                    Icons.search_rounded,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    AppCubit.get(context).changeDarkMode();
-                  },
-                  icon: const Icon(
-                    Icons.brightness_4_outlined,
-                  ),
-                ),
-              ],
-            ),
-            body: PageView(
-              controller: controller,
-              allowImplicitScrolling: true,
-              onPageChanged: (index) {
-                cubit.changeBottomNavBar(index);
-              },
-              children: [
-                articlesBuilder(cubit.generalList, context),
-                articlesBuilder(cubit.sportList, context),
-                articlesBuilder(cubit.technologyList, context),
-              ],
-            ),
-            //  cubit.screens[cubit.currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
-              items: cubit.bottomNavItem,
-              currentIndex: cubit.currentIndex,
-              onTap: (index) {
-                cubit.changeBottomNavBar(index);
-              },
-            ));
+              IconButton(
+                onPressed: () {
+                  AppCubit.get(context).changeDarkMode();
+                },
+                icon: const Icon(Icons.brightness_4_outlined),
+              ),
+            ],
+          ),
+          body: PageView(
+            controller: controller,
+            allowImplicitScrolling: true,
+            onPageChanged: (index) {
+              cubit.changeBottomNavBar(index);
+            },
+            children: cubit.screens,
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: cubit.bottomNavItem,
+            currentIndex: cubit.currentIndex,
+            onTap: (index) {
+              controller.jumpToPage(index);
+            },
+          ),
+        );
       },
     );
   }
