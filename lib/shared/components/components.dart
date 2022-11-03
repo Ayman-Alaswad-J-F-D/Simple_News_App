@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/shared/cubit/cubit.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../modules/web_view.dart';
 
@@ -25,7 +26,6 @@ Widget buildArticalItme(article, context, index) {
             Container(
               height: 130.0,
               width: 130.0,
-              // color: Colors.grey,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 // ignore: unnecessary_null_comparison
@@ -51,7 +51,6 @@ Widget buildArticalItme(article, context, index) {
                 height: 120.0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
                       child: Text(
@@ -80,19 +79,23 @@ Widget buildArticalItme(article, context, index) {
 
 Widget articlesBuilder(List list, context, {isSearch = false}) =>
     list.isNotEmpty
-        ? ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) =>
-                buildArticalItme(list[index], context, index),
-            separatorBuilder: (context, index) => myDivider(),
-            itemCount: list.length,
+        ? RefreshIndicator(
+            onRefresh: () async {
+              NewAppCubit.get(context).getGeneralData();
+              NewAppCubit.get(context).getSportsData();
+              NewAppCubit.get(context).getTechnologyData();
+            },
+            child: ListView.separated(
+              controller: ScrollController(),
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) =>
+                  buildArticalItme(list[index], context, index),
+              separatorBuilder: (context, index) => myDivider(),
+              itemCount: list.length,
+            ),
           )
         : isSearch
-            ? const Icon(
-                Icons.search_rounded,
-                size: 150,
-                color: Colors.grey,
-              )
+            ? const Icon(Icons.search_rounded, size: 150, color: Colors.grey)
             : const Center(child: CircularProgressIndicator());
 
 /////////////////////////////
@@ -116,10 +119,8 @@ Widget desktopItem(list, context) => Row(
                     Container(
                       height: 300,
                       width: double.infinity,
-                      // color: Colors.'grey',
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
-                        // ignore: unnecessary_null_comparison
                         child: list[NewAppCubit.get(context).selectedItem]
                                     ['urlToImage'] ==
                                 null
@@ -174,6 +175,121 @@ Widget desktopItem(list, context) => Row(
             ),
           ),
       ],
+    );
+
+/////////////////////////////
+
+Widget myShimmerAndroid(context) => RefreshIndicator(
+      onRefresh: () async {
+        NewAppCubit.get(context).getGeneralData();
+        NewAppCubit.get(context).getSportsData();
+        NewAppCubit.get(context).getTechnologyData();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: ListView.separated(
+          itemCount: 4,
+          itemBuilder: (context, index) => Shimmer.fromColors(
+            baseColor: Colors.grey.shade100,
+            highlightColor: Colors.white,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(17.0),
+                  child: myContainer(130, 130),
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    myContainer(150, 15),
+                    SizedBox(height: 10),
+                    myContainer(165, 20),
+                    SizedBox(height: 10),
+                    myContainer(165, 20),
+                    SizedBox(height: 10),
+                    myContainer(100, 15),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          separatorBuilder: (context, index) => SizedBox(),
+        ),
+      ),
+    );
+
+/////////////////////////////
+
+Widget myShimmerDesktop(list, context) => Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ListView.separated(
+              itemCount: 3,
+              itemBuilder: (context, index) => Shimmer.fromColors(
+                baseColor: Colors.grey.shade100,
+                highlightColor: Colors.white,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(17.0),
+                      child: myContainer(200, 200),
+                    ),
+                    const SizedBox(width: 25),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        myContainer(450, 25),
+                        SizedBox(height: 10),
+                        myContainer(400, 30),
+                        SizedBox(height: 10),
+                        myContainer(400, 30),
+                        SizedBox(height: 10),
+                        myContainer(200, 25),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              separatorBuilder: (context, index) => SizedBox(),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey.shade100,
+            highlightColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(17.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  myContainer(670, 300),
+                  SizedBox(height: 30),
+                  myContainer(630, 40),
+                  SizedBox(height: 10),
+                  myContainer(550, 55),
+                  SizedBox(height: 25),
+                  myContainer(250, 30)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+
+/////////////////////////////
+
+Widget myContainer(double? width, double? height) => Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: Colors.white,
+      ),
+      width: width,
+      height: height,
     );
 
 /////////////////////////////

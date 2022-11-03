@@ -6,32 +6,43 @@ import '../shared/components/components.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
+// ignore: must_be_immutable
 class TechnologyScreen extends StatelessWidget {
   TechnologyScreen({Key? key}) : super(key: key);
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewAppCubit, NewAppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is NewAppGetTechnologySuccessState) {
+          isLoading = true;
+        }
+      },
       builder: (context, state) {
-        var list = NewAppCubit.get(context).technologyList;
+        var cubit = NewAppCubit.get(context);
+
         return ScreenTypeLayout(
-          mobile: Builder(
-            builder: (BuildContext context) {
-              NewAppCubit.get(context).isDesktop == false
-                  ? articlesBuilder(list, context)
-                  : NewAppCubit.get(context).setDesktop(false);
-              return articlesBuilder(list, context);
-            },
-          ),
-          desktop: Builder(
-            builder: (BuildContext context) {
-              NewAppCubit.get(context).isDesktop
-                  ? desktopItem(list, context)
-                  : NewAppCubit.get(context).setDesktop(true);
-              return desktopItem(list, context);
-            },
-          ),
+          mobile: isLoading && cubit.technologyList.isNotEmpty
+              ? Builder(
+                  builder: (BuildContext context) {
+                    cubit.isDesktop == false
+                        ? articlesBuilder(cubit.technologyList, context)
+                        : cubit.setDesktop(false);
+                    return articlesBuilder(cubit.technologyList, context);
+                  },
+                )
+              : myShimmerAndroid(context),
+          desktop: isLoading && cubit.technologyList.isNotEmpty
+              ? Builder(
+                  builder: (BuildContext context) {
+                    cubit.isDesktop
+                        ? desktopItem(cubit.technologyList, context)
+                        : cubit.setDesktop(true);
+                    return desktopItem(cubit.technologyList, context);
+                  },
+                )
+              : myShimmerDesktop(cubit.technologyList, context),
           breakpoints: ScreenBreakpoints(desktop: 700, tablet: 600, watch: 100),
         );
       },

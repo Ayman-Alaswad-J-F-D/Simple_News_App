@@ -6,34 +6,43 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
-//  General Screen  //
-
+// ignore: must_be_immutable
 class GeneralScreen extends StatelessWidget {
   GeneralScreen({Key? key}) : super(key: key);
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    var cubit = NewAppCubit.get(context);
+
     return BlocConsumer<NewAppCubit, NewAppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is NewAppGetGeneralSuccessState ) {
+          isLoading = true;
+        }
+      },
       builder: (context, state) {
-        var list = NewAppCubit.get(context).generalList;
         return ScreenTypeLayout(
-          mobile: Builder(
-            builder: (BuildContext context) {
-              NewAppCubit.get(context).isDesktop == false
-                  ? articlesBuilder(list, context)
-                  : NewAppCubit.get(context).setDesktop(false);
-              return articlesBuilder(list, context);
-            },
-          ),
-          desktop: Builder(
-            builder: (BuildContext context) {
-              NewAppCubit.get(context).isDesktop
-                  ? desktopItem(list, context)
-                  : NewAppCubit.get(context).setDesktop(true);
-              return desktopItem(list, context);
-            },
-          ),
+          mobile: isLoading && cubit.generalList.isNotEmpty
+              ? Builder(
+                  builder: (BuildContext context) {
+                    cubit.isDesktop == false
+                        ? articlesBuilder(cubit.generalList, context)
+                        : cubit.setDesktop(false);
+                    return articlesBuilder(cubit.generalList, context);
+                  },
+                )
+              : myShimmerAndroid(context),
+          desktop: isLoading && cubit.generalList.isNotEmpty
+              ? Builder(
+                  builder: (BuildContext context) {
+                    cubit.isDesktop
+                        ? desktopItem(cubit.generalList, context)
+                        : cubit.setDesktop(true);
+                    return desktopItem(cubit.generalList, context);
+                  },
+                )
+              : myShimmerDesktop(cubit.generalList, context),
           breakpoints: ScreenBreakpoints(desktop: 700, tablet: 600, watch: 100),
         );
       },
