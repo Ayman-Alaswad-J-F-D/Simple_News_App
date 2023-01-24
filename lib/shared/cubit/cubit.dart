@@ -4,18 +4,18 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/modules/general.dart';
-import 'package:new_app/modules/sports.dart';
-import 'package:new_app/modules/technology.dart';
+import 'package:new_app/modules/general_screen.dart';
+import 'package:new_app/modules/sports_screen.dart';
+import 'package:new_app/modules/technology_screen.dart';
 import 'package:new_app/shared/cubit/states.dart';
 
 import '../network/remote/dio_helper.dart';
 
-class NewAppCubit extends Cubit<NewAppStates> {
-  NewAppCubit() : super(NewAppInitialState());
+class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
+  BreakingNewsAppCubit() : super(NewAppInitialState());
 
   // to be more esily when use this cubit
-  static NewAppCubit get(context) => BlocProvider.of(context);
+  static BreakingNewsAppCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
 
@@ -44,7 +44,7 @@ class NewAppCubit extends Cubit<NewAppStates> {
     currentIndex = index;
     if (index == 1) return getSportsData();
     if (index == 2) return getTechnologyData();
-    emit(NewAppBottomNavState());
+    emit(NewsAppBottomNavState());
   }
 
   List<Widget> screens = [
@@ -60,17 +60,17 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
   void setDesktop(bool value) {
     isDesktop = value;
-    emit(NewAppSetDesktopState());
+    emit(NewsAppSetDesktopState());
   }
 
   int selectedItem = 0;
   void selectItemBuilder(index) {
     selectedItem = index;
-    emit(NewAppSelectPage1ItemState());
+    emit(NewsAppSelectPage1ItemState());
   }
 
   void getGeneralData() async {
-    emit(NewAppGetGeneralLodingState());
+    emit(NewsAppGetGeneralLodingState());
     await DioHelper.getData(
       url: 'v2/top-headlines',
       query: {
@@ -83,18 +83,18 @@ class NewAppCubit extends Cubit<NewAppStates> {
         generalList = value.data["articles"];
         print(value.data["articles"][0]["title"]);
         // print(page1[0]['title']);
-        emit(NewAppGetGeneralSuccessState());
+        emit(NewsAppGetGeneralSuccessState());
       },
     ).catchError(
       (error) {
         print(error.toString());
-        emit(NewAppGetGeneralErrorState(error.toString()));
+        emit(NewsAppGetGeneralErrorState(error.toString()));
       },
     );
   }
 
   void getSportsData() async {
-    emit(NewAppGetSportsLodingState());
+    emit(NewsAppGetSportsLodingState());
     if (sportList.isEmpty) {
       await DioHelper.getData(
         url: 'v2/top-headlines',
@@ -109,21 +109,21 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
           print(value.data["articles"][0]["title"]);
           // print(page1[0]['title']);
-          emit(NewAppGetSportsSuccessState());
+          emit(NewsAppGetSportsSuccessState());
         },
       ).catchError(
         (error) {
           print(error.toString());
-          emit(NewAppGetSportsErrorState(error.toString()));
+          emit(NewsAppGetSportsErrorState(error.toString()));
         },
       );
     } else {
-      emit(NewAppGetSportsSuccessState());
+      emit(NewsAppGetSportsSuccessState());
     }
   }
 
   void getTechnologyData() async {
-    emit(NewAppGetTechnologyLodingState());
+    emit(NewsAppGetTechnologyLodingState());
     if (technologyList.isEmpty) {
       await DioHelper.getData(
         url: 'v2/top-headlines',
@@ -138,23 +138,23 @@ class NewAppCubit extends Cubit<NewAppStates> {
 
           print(value.data["articles"][0]["title"]);
           // print(page1[0]['title']);
-          emit(NewAppGetTechnologySuccessState());
+          emit(NewsAppGetTechnologySuccessState());
         },
       ).catchError(
         (error) {
           print(error.toString());
-          emit(NewAppGetTechnologyErrorState(error.toString()));
+          emit(NewsAppGetTechnologyErrorState(error.toString()));
         },
       );
     } else {
-      emit(NewAppGetTechnologySuccessState());
+      emit(NewsAppGetTechnologySuccessState());
     }
   }
 
   List<dynamic> search = [];
 
   void getSearch(myValue) {
-    emit(NewAppGetSearchLodingState());
+    emit(NewsAppGetSearchLodingState());
     DioHelper.getData(
       url: 'v2/everything',
       query: {
@@ -166,12 +166,12 @@ class NewAppCubit extends Cubit<NewAppStates> {
         search = value.data["articles"];
         // print(value.data["articles"][0]["title"]);
         // print(page1[0]['title']);
-        emit(NewAppGetSearchSuccessState());
+        emit(NewsAppGetSearchSuccessState());
       },
     ).catchError(
       (error) {
         print(error.toString());
-        emit(NewAppGetSearchErrorState(error.toString()));
+        emit(NewsAppGetSearchErrorState(error.toString()));
       },
     );
   }

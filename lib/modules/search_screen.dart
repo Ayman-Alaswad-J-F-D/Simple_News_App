@@ -13,10 +13,10 @@ class SearchScreen extends StatelessWidget {
   var searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NewAppCubit, NewAppStates>(
+    return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var list = NewAppCubit.get(context).search;
+        var list = BreakingNewsAppCubit.get(context).search;
         return Scaffold(
           appBar: AppBar(
             elevation: 0.0,
@@ -33,7 +33,7 @@ class SearchScreen extends StatelessWidget {
                       Icons.search_rounded,
                     ),
                     onChange: (value) {
-                      NewAppCubit.get(context).getSearch(value);
+                      BreakingNewsAppCubit.get(context).getSearch(value);
                     },
                     validate: (value) {
                       if (value!.isEmpty) {

@@ -5,14 +5,14 @@ import 'package:new_app/shared/cubit/cubit.dart';
 Widget buildArticalItme(article, context, index) {
   var imageUrl = '${article['urlToImage']}';
   return Container(
-    color: NewAppCubit.get(context).selectedItem == index &&
-            NewAppCubit.get(context).isDesktop
+    color: BreakingNewsAppCubit.get(context).selectedItem == index &&
+            BreakingNewsAppCubit.get(context).isDesktop
         ? Theme.of(context).cardColor
         : null,
     child: InkWell(
       onTap: () {
-        if (NewAppCubit.get(context).isDesktop == true) {
-          NewAppCubit.get(context).selectItemBuilder(index);
+        if (BreakingNewsAppCubit.get(context).isDesktop == true) {
+          BreakingNewsAppCubit.get(context).selectItemBuilder(index);
         } else {
           navigateTo(context, WebViewScreen(article['url']));
         }

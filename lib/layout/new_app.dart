@@ -1,24 +1,22 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, avoid_print
-
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/modules/search.dart';
-import 'package:new_app/shared/components/components.dart';
-import 'package:new_app/shared/cubit/cubit.dart';
-import 'package:new_app/shared/cubit/states.dart';
 
 import '../app_cubit/app_cubit.dart';
+import '../modules/search_screen.dart';
+import '../shared/components/components.dart';
+import '../shared/cubit/cubit.dart';
+import '../shared/cubit/states.dart';
 
-class NewApp extends StatefulWidget {
-  NewApp({Key? key}) : super(key: key);
+class LayoutScreen extends StatefulWidget {
+  LayoutScreen({Key? key}) : super(key: key);
 
   @override
-  State<NewApp> createState() => _NewAppState();
+  State<LayoutScreen> createState() => _LayoutScreenState();
 }
 
-class _NewAppState extends State<NewApp> with SingleTickerProviderStateMixin {
+class _LayoutScreenState extends State<LayoutScreen>
+    with SingleTickerProviderStateMixin {
   // late AnimationController _animatedLeading;
 
   // @override
@@ -41,10 +39,10 @@ class _NewAppState extends State<NewApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NewAppCubit, NewAppStates>(
+    return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = NewAppCubit.get(context);
+        var cubit = BreakingNewsAppCubit.get(context);
 
         return Scaffold(
           appBar: AppBar(

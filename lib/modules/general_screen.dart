@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_app/shared/components/components.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-import '../shared/components/components.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
-class TechnologyScreen extends StatelessWidget {
-  TechnologyScreen({Key? key}) : super(key: key);
+//  General Screen  //
+
+class GeneralScreen extends StatelessWidget {
+  GeneralScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NewAppCubit, NewAppStates>(
+    return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var list = NewAppCubit.get(context).technologyList;
+        var list = BreakingNewsAppCubit.get(context).generalList;
         return ScreenTypeLayout(
           mobile: Builder(
             builder: (BuildContext context) {
-              NewAppCubit.get(context).isDesktop == false
+              BreakingNewsAppCubit.get(context).isDesktop == false
                   ? articlesBuilder(list, context)
-                  : NewAppCubit.get(context).setDesktop(false);
+                  : BreakingNewsAppCubit.get(context).setDesktop(false);
               return articlesBuilder(list, context);
             },
           ),
           desktop: Builder(
             builder: (BuildContext context) {
-              NewAppCubit.get(context).isDesktop
+              BreakingNewsAppCubit.get(context).isDesktop
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -44,6 +46,7 @@ class TechnologyScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
+                                      color: Colors.white,
                                       height: 300,
                                       width: double.infinity,
                                       // color: Colors.'grey',
@@ -51,7 +54,8 @@ class TechnologyScreen extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(15.0),
                                         // ignore: unnecessary_null_comparison
-                                        child: list[NewAppCubit.get(context)
+                                        child: list[BreakingNewsAppCubit.get(
+                                                            context)
                                                         .selectedItem]
                                                     ['urlToImage'] ==
                                                 null
@@ -60,7 +64,8 @@ class TechnologyScreen extends StatelessWidget {
                                                     .image_not_supported_rounded,
                                                 size: 140)
                                             : Image.network(
-                                                list[NewAppCubit.get(context)
+                                                list[BreakingNewsAppCubit.get(
+                                                            context)
                                                         .selectedItem]
                                                     ['urlToImage'],
                                                 errorBuilder: (BuildContext
@@ -80,7 +85,7 @@ class TechnologyScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 20),
                                     Text(
-                                      '${list[NewAppCubit.get(context).selectedItem]['title']}',
+                                      '${list[BreakingNewsAppCubit.get(context).selectedItem]['title']}',
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -88,13 +93,13 @@ class TechnologyScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      list[NewAppCubit.get(context)
+                                      list[BreakingNewsAppCubit.get(context)
                                                       .selectedItem]
                                                   ['description'] ==
                                               null
                                           ? 'No Found Description'
-                                          : '${list[NewAppCubit.get(context).selectedItem]['description']}',
-                                      maxLines: 4,
+                                          : '${list[BreakingNewsAppCubit.get(context).selectedItem]['description']}',
+                                      maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 17,
@@ -106,7 +111,7 @@ class TechnologyScreen extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          '${list[NewAppCubit.get(context).selectedItem]['publishedAt']}',
+                                          '${list[BreakingNewsAppCubit.get(context).selectedItem]['publishedAt']}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText2,
@@ -120,8 +125,7 @@ class TechnologyScreen extends StatelessWidget {
                           ),
                       ],
                     )
-                  : NewAppCubit.get(context).setDesktop(true);
-
+                  : BreakingNewsAppCubit.get(context).setDesktop(true);
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -145,13 +149,13 @@ class TechnologyScreen extends StatelessWidget {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15.0),
                                   // ignore: unnecessary_null_comparison
-                                  child: list[NewAppCubit.get(context)
+                                  child: list[BreakingNewsAppCubit.get(context)
                                               .selectedItem]['urlToImage'] ==
                                           null
                                       ? Icon(Icons.image_not_supported_rounded,
                                           size: 140)
                                       : Image.network(
-                                          list[NewAppCubit.get(context)
+                                          list[BreakingNewsAppCubit.get(context)
                                               .selectedItem]['urlToImage'],
                                           errorBuilder: (BuildContext context,
                                               Object exception,
@@ -168,7 +172,7 @@ class TechnologyScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 20),
                               Text(
-                                '${list[NewAppCubit.get(context).selectedItem]['title']}',
+                                '${list[BreakingNewsAppCubit.get(context).selectedItem]['title']}',
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -176,12 +180,12 @@ class TechnologyScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                list[NewAppCubit.get(context).selectedItem]
-                                            ['description'] ==
+                                list[BreakingNewsAppCubit.get(context)
+                                            .selectedItem]['description'] ==
                                         null
                                     ? 'No Found Description'
-                                    : '${list[NewAppCubit.get(context).selectedItem]['description']}',
-                                maxLines: 4,
+                                    : '${list[BreakingNewsAppCubit.get(context).selectedItem]['description']}',
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 17, color: Colors.grey.shade600),
@@ -192,7 +196,7 @@ class TechnologyScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${list[NewAppCubit.get(context).selectedItem]['publishedAt']}',
+                                    '${list[BreakingNewsAppCubit.get(context).selectedItem]['publishedAt']}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
