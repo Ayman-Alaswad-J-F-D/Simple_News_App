@@ -25,6 +25,7 @@ class SplashScreen extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
+          SizedBox(height: 20),
           RichText(
             text: TextSpan(
               children: [

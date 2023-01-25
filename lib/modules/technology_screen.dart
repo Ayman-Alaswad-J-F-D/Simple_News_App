@@ -6,8 +6,10 @@ import '../shared/components/components.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
+// ignore: must_be_immutable
 class TechnologyScreen extends StatelessWidget {
   TechnologyScreen({Key? key}) : super(key: key);
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +211,6 @@ class TechnologyScreen extends StatelessWidget {
               );
             },
           ),
-          breakpoints: ScreenBreakpoints(desktop: 700, tablet: 600, watch: 100),
         );
       },
     );

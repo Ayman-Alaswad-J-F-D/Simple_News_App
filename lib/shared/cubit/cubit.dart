@@ -1,7 +1,6 @@
 // import 'package:bloc/bloc.dart';
 // ignore_for_file: avoid_print
 
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_app/modules/general_screen.dart';
@@ -19,22 +18,22 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
 
   int currentIndex = 0;
 
-  List<TabItem> bottomNavItem = [
-    const TabItem(
+  List<BottomNavigationBarItem> bottomNavItem = [
+    const BottomNavigationBarItem(
       icon: Icon(Icons.newspaper_rounded),
-      title: 'General',
+      label: 'General',
     ),
-    const TabItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.sports_football_rounded,
       ),
-      title: 'Sports',
+      label: 'Sports',
     ),
-    const TabItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.psychology_rounded,
       ),
-      title: 'Technology',
+      label: 'Technology',
     ),
   ];
 
@@ -42,6 +41,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
 
   void changeBottomNavBar(int index) {
     currentIndex = index;
+
     if (index == 1) return getSportsData();
     if (index == 2) return getTechnologyData();
     emit(NewsAppBottomNavState());
@@ -76,7 +76,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
       query: {
         'country': 'us',
         'category': 'general',
-        'apiKey': '14229368f6b44500b817708b722a1285',
+        'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
       },
     ).then(
       (value) {
@@ -101,7 +101,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
         query: {
           'country': 'us',
           'category': 'sports',
-          'apiKey': '14229368f6b44500b817708b722a1285',
+          'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
         },
       ).then(
         (value) {
@@ -130,7 +130,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
         query: {
           'country': 'us',
           'category': 'technology',
-          'apiKey': '14229368f6b44500b817708b722a1285',
+          'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
         },
       ).then(
         (value) {
@@ -159,7 +159,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
       url: 'v2/everything',
       query: {
         'q': '$myValue',
-        'apiKey': '14229368f6b44500b817708b722a1285',
+        'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
       },
     ).then(
       (value) {

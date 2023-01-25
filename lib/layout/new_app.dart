@@ -1,4 +1,3 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,6 +36,8 @@ class _LayoutScreenState extends State<LayoutScreen>
   //   }
   // }
 
+  final PageController controller = PageController();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
@@ -50,10 +51,7 @@ class _LayoutScreenState extends State<LayoutScreen>
             title: const Text('Breaking News'),
             leading: Padding(
               padding: const EdgeInsets.only(top: 0, left: 4),
-              child: Icon(
-                Icons.hdr_strong_rounded,
-                size: 30,
-              ),
+              child: Icon(Icons.hdr_strong_rounded, size: 30),
             ),
             // leading: Padding(
             //   padding: const EdgeInsets.only(top: 5, left: 8),
@@ -71,33 +69,29 @@ class _LayoutScreenState extends State<LayoutScreen>
                 onPressed: () {
                   navigateTo(context, SearchScreen());
                 },
-                icon: const Icon(
-                  Icons.search_rounded,
-                ),
+                icon: const Icon(Icons.search_rounded),
               ),
               IconButton(
                 onPressed: () {
                   AppCubit.get(context).changeDarkMode();
                 },
-                icon: const Icon(
-                  Icons.brightness_4_outlined,
-                ),
+                icon: const Icon(Icons.brightness_4_outlined),
               ),
             ],
           ),
-          body: cubit.screens[cubit.currentIndex],
-          bottomNavigationBar: ConvexAppBar.badge(
-            const {1: 'Hot'},
-            badgeMargin: const EdgeInsets.only(bottom: 30, right: 30),
-            items: cubit.bottomNavItem,
-            initialActiveIndex: cubit.currentIndex,
-            backgroundColor: Colors.white,
-            elevation: 0.5,
-            style: TabStyle.flip,
-            curveSize: 100,
-            activeColor: Colors.indigo,
-            onTap: (index) {
+          body: PageView(
+            controller: controller,
+            allowImplicitScrolling: true,
+            onPageChanged: (index) {
               cubit.changeBottomNavBar(index);
+            },
+            children: cubit.screens,
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: cubit.bottomNavItem,
+            currentIndex: cubit.currentIndex,
+            onTap: (index) {
+              controller.jumpToPage(index);
             },
           ),
         );

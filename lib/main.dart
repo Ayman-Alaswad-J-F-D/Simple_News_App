@@ -10,6 +10,14 @@ import 'shared/network/local/cache_helper.dart';
 import 'shared/network/remote/dio_helper.dart';
 import 'shared/themes/themes.dart';
 
+import 'package:new_app/app_cubit/app_cubit.dart';
+import 'package:new_app/app_cubit/app_states.dart';
+import 'package:new_app/shared/bloc_observer.dart';
+import 'package:new_app/shared/cubit/cubit.dart';
+import 'package:new_app/shared/network/local/cache_helper.dart';
+import 'package:new_app/shared/network/remote/dio_helper.dart';
+import 'package:new_app/shared/themes/themes.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -29,7 +37,6 @@ void main() async {
   BlocOverrides.runZoned(
     () {
       // Use cubits...
-
       DioHelper.init();
 
       runApp(BreakingNewsApp(isDark));

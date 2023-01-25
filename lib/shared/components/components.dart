@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/modules/web_view.dart';
 import 'package:new_app/shared/cubit/cubit.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../../modules/web_view.dart';
 
 Widget buildArticalItme(article, context, index) {
   var imageUrl = '${article['urlToImage']}';
@@ -24,7 +26,6 @@ Widget buildArticalItme(article, context, index) {
             Container(
               height: 130.0,
               width: 130.0,
-              // color: Colors.grey,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
                 // ignore: unnecessary_null_comparison
@@ -44,15 +45,12 @@ Widget buildArticalItme(article, context, index) {
                       ),
               ),
             ),
-            const SizedBox(
-              width: 20.0,
-            ),
+            const SizedBox(width: 20.0),
             Expanded(
               child: Container(
                 height: 120.0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
                       child: Text(
@@ -77,24 +75,222 @@ Widget buildArticalItme(article, context, index) {
   );
 }
 
-//////////////////
+/////////////////////////////
 
 Widget articlesBuilder(List list, context, {isSearch = false}) =>
     list.isNotEmpty
-        ? ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) =>
-                buildArticalItme(list[index], context, index),
-            separatorBuilder: (context, index) => myDivider(),
-            itemCount: list.length,
+        ? RefreshIndicator(
+            onRefresh: () async {
+              BreakingNewsAppCubit.get(context).getGeneralData();
+              BreakingNewsAppCubit.get(context).getSportsData();
+              BreakingNewsAppCubit.get(context).getTechnologyData();
+            },
+            child: ListView.separated(
+              controller: ScrollController(),
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) =>
+                  buildArticalItme(list[index], context, index),
+              separatorBuilder: (context, index) => myDivider(),
+              itemCount: list.length,
+            ),
           )
         : isSearch
-            ? const Icon(
-                Icons.search_rounded,
-                size: 150,
-                color: Colors.grey,
-              )
+            ? const Icon(Icons.search_rounded, size: 150, color: Colors.grey)
             : const Center(child: CircularProgressIndicator());
+
+/////////////////////////////
+
+Widget desktopItem(list, context) => Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: articlesBuilder(list, context),
+        ),
+        if (list.length > 0)
+          Expanded(
+            child: Container(
+              color: Theme.of(context).cardColor,
+              height: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 300,
+                      width: double.infinity,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: list[BreakingNewsAppCubit.get(context)
+                                    .selectedItem]['urlToImage'] ==
+                                null
+                            ? Icon(Icons.image_not_supported_rounded, size: 140)
+                            : Image.network(
+                                list[BreakingNewsAppCubit.get(context)
+                                    .selectedItem]['urlToImage'],
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const Icon(
+                                    Icons.image_not_supported_rounded,
+                                    size: 100,
+                                    color: Colors.grey,
+                                  );
+                                },
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      '${list[BreakingNewsAppCubit.get(context).selectedItem]['title']}',
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 24, color: Colors.black),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      list[BreakingNewsAppCubit.get(context).selectedItem]
+                                  ['description'] ==
+                              null
+                          ? 'No Found Description'
+                          : '${list[BreakingNewsAppCubit.get(context).selectedItem]['description']}',
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(fontSize: 17, color: Colors.grey.shade600),
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${list[BreakingNewsAppCubit.get(context).selectedItem]['publishedAt']}',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+
+/////////////////////////////
+
+Widget myShimmerAndroid(context) => RefreshIndicator(
+      onRefresh: () async {
+        BreakingNewsAppCubit.get(context).getGeneralData();
+        BreakingNewsAppCubit.get(context).getSportsData();
+        BreakingNewsAppCubit.get(context).getTechnologyData();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: ListView.separated(
+          itemCount: 4,
+          itemBuilder: (context, index) => Shimmer.fromColors(
+            baseColor: Colors.grey.shade100,
+            highlightColor: Colors.white.withOpacity(0.8),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(17.0),
+                  child: myContainer(130, 130),
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    myContainer(150, 15),
+                    SizedBox(height: 10),
+                    myContainer(165, 20),
+                    SizedBox(height: 10),
+                    myContainer(165, 20),
+                    SizedBox(height: 10),
+                    myContainer(100, 15),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          separatorBuilder: (context, index) => SizedBox(),
+        ),
+      ),
+    );
+
+/////////////////////////////
+
+Widget myShimmerDesktop(list, context) => Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ListView.separated(
+              itemCount: 3,
+              itemBuilder: (context, index) => Shimmer.fromColors(
+                baseColor: Colors.grey.shade100,
+                highlightColor: Colors.white.withOpacity(0.8),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(17.0),
+                      child: myContainer(200, 200),
+                    ),
+                    const SizedBox(width: 25),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        myContainer(450, 25),
+                        SizedBox(height: 10),
+                        myContainer(400, 30),
+                        SizedBox(height: 10),
+                        myContainer(400, 30),
+                        SizedBox(height: 10),
+                        myContainer(200, 25),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              separatorBuilder: (context, index) => SizedBox(),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey.shade100,
+            highlightColor: Colors.white.withOpacity(0.9),
+            child: Padding(
+              padding: const EdgeInsets.all(17.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  myContainer(670, 300),
+                  SizedBox(height: 30),
+                  myContainer(630, 40),
+                  SizedBox(height: 10),
+                  myContainer(550, 55),
+                  SizedBox(height: 25),
+                  myContainer(250, 30)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+
+/////////////////////////////
+
+Widget myContainer(double? width, double? height) => Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: Colors.white,
+      ),
+      width: width,
+      height: height,
+    );
 
 /////////////////////////////
 
