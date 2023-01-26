@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/modules/search.dart';
+
 import 'package:new_app/shared/components/components.dart';
 import 'package:new_app/shared/cubit/cubit.dart';
 import 'package:new_app/shared/cubit/states.dart';
@@ -47,7 +47,7 @@ class _LayoutScreenState extends State<LayoutScreen>
     return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = NewAppCubit.get(context);
+        var cubit = BreakingNewsAppCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
