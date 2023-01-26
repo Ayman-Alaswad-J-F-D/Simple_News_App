@@ -1,6 +1,6 @@
 abstract class BreakingNewsAppStates {}
 
-class NewsAppInitialState extends BreakingNewsAppStates {}
+class NewAppInitialState extends NewAppStates {}
 
 class NewsAppBottomNavState extends BreakingNewsAppStates {}
 

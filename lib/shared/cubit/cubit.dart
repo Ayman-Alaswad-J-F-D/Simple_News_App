@@ -3,15 +3,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/modules/general_screen.dart';
-import 'package:new_app/modules/sports_screen.dart';
+import 'package:new_app/modules/general.dart';
+import 'package:new_app/modules/sports.dart';
+import 'package:new_app/modules/technology.dart';
+import 'package:new_app/shared/cubit/states.dart';
 
 import '../../modules/technology_screen.dart';
 import '../network/remote/dio_helper.dart';
 import 'states.dart';
 
-class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
-  BreakingNewsAppCubit() : super(NewsAppInitialState());
+class NewAppCubit extends Cubit<NewAppStates> {
+  NewAppCubit() : super(NewAppInitialState());
 
   // to be more esily when use this cubit
   static BreakingNewsAppCubit get(context) => BlocProvider.of(context);
@@ -42,7 +44,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
   void changeBottomNavBar(int index) {
     currentIndex = index;
     if (index == 2) getTechnologyData();
-    emit(NewsAppBottomNavState());
+    emit(NewAppBottomNavState());
   }
 
   List<Widget> screens = [

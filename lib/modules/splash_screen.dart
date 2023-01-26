@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../layout/new_app.dart';
@@ -21,6 +21,9 @@ class SplashScreen extends StatelessWidget {
             backgroundImage: AssetImage(
               'assets/images/breaking-news-.jpg',
             ),
+          ),
+          SizedBox(
+            height: 20,
           ),
           SizedBox(height: 20),
           RichText(
@@ -47,7 +50,7 @@ class SplashScreen extends StatelessWidget {
           ),
         ],
       ),
-      nextScreen: NewApp(),
+      nextScreen: LayoutScreen(),
       duration: 3000,
       splashIconSize: 330,
       splashTransition: SplashTransition.fadeTransition,
