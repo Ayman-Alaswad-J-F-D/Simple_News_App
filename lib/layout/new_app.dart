@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/modules/search.dart';
+import 'package:new_app/modules/search_screen.dart';
 import 'package:new_app/shared/components/components.dart';
 import 'package:new_app/shared/cubit/cubit.dart';
 import 'package:new_app/shared/cubit/states.dart';
@@ -42,10 +42,10 @@ class _NewAppState extends State<NewApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NewAppCubit, NewAppStates>(
+    return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = NewAppCubit.get(context);
+        var cubit = BreakingNewsAppCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
