@@ -7,42 +7,42 @@ import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
 // ignore: must_be_immutable
-class SportsScreen extends StatelessWidget {
-  SportsScreen({Key? key}) : super(key: key);
+class TechnologyScreen extends StatelessWidget {
+  TechnologyScreen({Key? key}) : super(key: key);
   bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    var cubit = NewAppCubit.get(context);
-
-    return BlocConsumer<NewAppCubit, NewAppStates>(
+    return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {
-        if (state is NewAppGetSportsSuccessState) {
+        if (state is NewsAppGetTechnologySuccessState) {
           isLoading = true;
         }
       },
       builder: (context, state) {
+        var cubit = BreakingNewsAppCubit.get(context);
+
         return ScreenTypeLayout(
-          mobile: isLoading && cubit.sportList.isNotEmpty
+          mobile: isLoading && cubit.technologyList.isNotEmpty
               ? Builder(
                   builder: (BuildContext context) {
                     cubit.isDesktop == false
-                        ? articlesBuilder(cubit.sportList, context)
+                        ? articlesBuilder(cubit.technologyList, context)
                         : cubit.setDesktop(false);
-                    return articlesBuilder(cubit.sportList, context);
+                    return articlesBuilder(cubit.technologyList, context);
                   },
                 )
               : myShimmerAndroid(context),
-          desktop: isLoading && cubit.sportList.isNotEmpty
+          desktop: isLoading && cubit.technologyList.isNotEmpty
               ? Builder(
                   builder: (BuildContext context) {
                     cubit.isDesktop
-                        ? desktopItem(cubit.sportList, context)
+                        ? desktopItem(cubit.technologyList, context)
                         : cubit.setDesktop(true);
-                    return desktopItem(cubit.sportList, context);
+                    return desktopItem(cubit.technologyList, context);
                   },
                 )
-              : myShimmerDesktop(cubit.sportList, context),
+              : myShimmerDesktop(cubit.technologyList, context),
           breakpoints: ScreenBreakpoints(desktop: 700, tablet: 600, watch: 100),
         );
       },

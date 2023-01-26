@@ -1,48 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/shared/components/components.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import '../shared/components/components.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
 // ignore: must_be_immutable
-class GeneralScreen extends StatelessWidget {
-  GeneralScreen({Key? key}) : super(key: key);
+class SportsScreen extends StatelessWidget {
+  SportsScreen({Key? key}) : super(key: key);
   bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    var cubit = NewAppCubit.get(context);
+    var cubit = BreakingNewsAppCubit.get(context);
 
-    return BlocConsumer<NewAppCubit, NewAppStates>(
+    return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {
-        if (state is NewAppGetGeneralSuccessState) {
+        if (state is NewsAppGetSportsSuccessState) {
           isLoading = true;
         }
       },
       builder: (context, state) {
         return ScreenTypeLayout(
-          mobile: isLoading && cubit.generalList.isNotEmpty
+          mobile: isLoading && cubit.sportList.isNotEmpty
               ? Builder(
                   builder: (BuildContext context) {
                     cubit.isDesktop == false
-                        ? articlesBuilder(cubit.generalList, context)
+                        ? articlesBuilder(cubit.sportList, context)
                         : cubit.setDesktop(false);
-                    return articlesBuilder(cubit.generalList, context);
+                    return articlesBuilder(cubit.sportList, context);
                   },
                 )
               : myShimmerAndroid(context),
-          desktop: isLoading && cubit.generalList.isNotEmpty
+          desktop: isLoading && cubit.sportList.isNotEmpty
               ? Builder(
                   builder: (BuildContext context) {
                     cubit.isDesktop
-                        ? desktopItem(cubit.generalList, context)
+                        ? desktopItem(cubit.sportList, context)
                         : cubit.setDesktop(true);
-                    return desktopItem(cubit.generalList, context);
+                    return desktopItem(cubit.sportList, context);
                   },
                 )
-              : myShimmerDesktop(cubit.generalList, context),
+              : myShimmerDesktop(cubit.sportList, context),
           breakpoints: ScreenBreakpoints(desktop: 700, tablet: 600, watch: 100),
         );
       },

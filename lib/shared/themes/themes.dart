@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hexcolor/hexcolor.dart';
+// import 'package:hexcolor/hexcolor.dart';
 
 ThemeData darkTheme = ThemeData(
   cardColor: Colors.black45.withOpacity(.1),
@@ -17,19 +17,19 @@ ThemeData darkTheme = ThemeData(
       color: Colors.indigo.shade300,
     ),
   ),
-  scaffoldBackgroundColor: HexColor('#353A4F'),
+  scaffoldBackgroundColor: Color(0xff353A4F),
   dividerColor: Colors.grey.shade200,
   appBarTheme: AppBarTheme(
     titleSpacing: 5,
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
-    backgroundColor: HexColor('#353A4F'),
+    backgroundColor: Color(0xff353A4F),
     elevation: 2.0,
     // ignore: deprecated_member_use
     backwardsCompatibility: false,
     systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: HexColor('#353A4F'),
+      statusBarColor: Color(0xff353A4F),
       statusBarIconBrightness: Brightness.light,
     ),
     titleTextStyle: const TextStyle(
@@ -42,7 +42,7 @@ ThemeData darkTheme = ThemeData(
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     elevation: 5.0,
-    backgroundColor: HexColor('#808B96'),
+    backgroundColor: Color(0xff808B96),
     unselectedItemColor: Colors.grey.shade50,
     selectedLabelStyle:
         const TextStyle(fontFamily: 'Tajawal', letterSpacing: 1.5),

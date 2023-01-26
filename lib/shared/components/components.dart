@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:intl/intl.dart';
 import 'package:new_app/shared/cubit/cubit.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -7,14 +8,14 @@ import '../../modules/web_view.dart';
 Widget buildArticalItme(article, context, index) {
   var imageUrl = '${article['urlToImage']}';
   return Container(
-    color: NewAppCubit.get(context).selectedItem == index &&
-            NewAppCubit.get(context).isDesktop
+    color: BreakingNewsAppCubit.get(context).selectedItem == index &&
+            BreakingNewsAppCubit.get(context).isDesktop
         ? Theme.of(context).cardColor
         : null,
     child: InkWell(
       onTap: () {
-        if (NewAppCubit.get(context).isDesktop == true) {
-          NewAppCubit.get(context).selectItemBuilder(index);
+        if (BreakingNewsAppCubit.get(context).isDesktop == true) {
+          BreakingNewsAppCubit.get(context).selectItemBuilder(index);
         } else {
           navigateTo(context, WebViewScreen(article['url']));
         }
@@ -61,7 +62,8 @@ Widget buildArticalItme(article, context, index) {
                       ),
                     ),
                     Text(
-                      '${article['publishedAt']}',
+                      'published At : ${article['publishedAt']}',
+                      //DateFormat.yMMMd().format()
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ],
@@ -81,9 +83,9 @@ Widget articlesBuilder(List list, context, {isSearch = false}) =>
     list.isNotEmpty
         ? RefreshIndicator(
             onRefresh: () async {
-              NewAppCubit.get(context).getGeneralData();
-              NewAppCubit.get(context).getSportsData();
-              NewAppCubit.get(context).getTechnologyData();
+              BreakingNewsAppCubit.get(context).getGeneralData();
+              BreakingNewsAppCubit.get(context).getSportsData();
+              BreakingNewsAppCubit.get(context).getTechnologyData();
             },
             child: ListView.separated(
               controller: ScrollController(),
@@ -121,13 +123,13 @@ Widget desktopItem(list, context) => Row(
                       width: double.infinity,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
-                        child: list[NewAppCubit.get(context).selectedItem]
-                                    ['urlToImage'] ==
+                        child: list[BreakingNewsAppCubit.get(context)
+                                    .selectedItem]['urlToImage'] ==
                                 null
                             ? Icon(Icons.image_not_supported_rounded, size: 140)
                             : Image.network(
-                                list[NewAppCubit.get(context).selectedItem]
-                                    ['urlToImage'],
+                                list[BreakingNewsAppCubit.get(context)
+                                    .selectedItem]['urlToImage'],
                                 errorBuilder: (BuildContext context,
                                     Object exception, StackTrace? stackTrace) {
                                   return const Icon(
@@ -142,18 +144,18 @@ Widget desktopItem(list, context) => Row(
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      '${list[NewAppCubit.get(context).selectedItem]['title']}',
+                      '${list[BreakingNewsAppCubit.get(context).selectedItem]['title']}',
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 24, color: Colors.black),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      list[NewAppCubit.get(context).selectedItem]
+                      list[BreakingNewsAppCubit.get(context).selectedItem]
                                   ['description'] ==
                               null
                           ? 'No Found Description'
-                          : '${list[NewAppCubit.get(context).selectedItem]['description']}',
+                          : '${list[BreakingNewsAppCubit.get(context).selectedItem]['description']}',
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style:
@@ -164,7 +166,7 @@ Widget desktopItem(list, context) => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${list[NewAppCubit.get(context).selectedItem]['publishedAt']}',
+                          '${list[BreakingNewsAppCubit.get(context).selectedItem]['publishedAt']}',
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
@@ -181,9 +183,9 @@ Widget desktopItem(list, context) => Row(
 
 Widget myShimmerAndroid(context) => RefreshIndicator(
       onRefresh: () async {
-        NewAppCubit.get(context).getGeneralData();
-        NewAppCubit.get(context).getSportsData();
-        NewAppCubit.get(context).getTechnologyData();
+        BreakingNewsAppCubit.get(context).getGeneralData();
+        BreakingNewsAppCubit.get(context).getSportsData();
+        BreakingNewsAppCubit.get(context).getTechnologyData();
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),

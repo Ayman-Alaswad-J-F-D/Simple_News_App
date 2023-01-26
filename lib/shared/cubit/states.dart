@@ -1,47 +1,47 @@
-abstract class NewAppStates {}
+abstract class BreakingNewsAppStates {}
 
-class NewAppInitialState extends NewAppStates {}
+class NewsAppInitialState extends BreakingNewsAppStates {}
 
-class NewAppBottomNavState extends NewAppStates {}
+class NewsAppBottomNavState extends BreakingNewsAppStates {}
 
-class NewAppGetGeneralLodingState extends NewAppStates {}
+class NewsAppGetGeneralLodingState extends BreakingNewsAppStates {}
 
-class NewAppGetGeneralSuccessState extends NewAppStates {}
+class NewsAppGetGeneralSuccessState extends BreakingNewsAppStates {}
 
-class NewAppGetGeneralErrorState extends NewAppStates {
+class NewsAppGetGeneralErrorState extends BreakingNewsAppStates {
   final String error;
-  NewAppGetGeneralErrorState(this.error);
+  NewsAppGetGeneralErrorState(this.error);
 }
 
-class NewAppGetSportsLodingState extends NewAppStates {}
+class NewsAppGetSportsLodingState extends BreakingNewsAppStates {}
 
-class NewAppGetSportsSuccessState extends NewAppStates {}
+class NewsAppGetSportsSuccessState extends BreakingNewsAppStates {}
 
-class NewAppGetSportsErrorState extends NewAppStates {
+class NewsAppGetSportsErrorState extends BreakingNewsAppStates {
   final String error;
-  NewAppGetSportsErrorState(this.error);
+  NewsAppGetSportsErrorState(this.error);
 }
 
-class NewAppGetTechnologyLodingState extends NewAppStates {}
+class NewsAppGetTechnologyLodingState extends BreakingNewsAppStates {}
 
-class NewAppGetTechnologySuccessState extends NewAppStates {}
+class NewsAppGetTechnologySuccessState extends BreakingNewsAppStates {}
 
-class NewAppGetTechnologyErrorState extends NewAppStates {
+class NewsAppGetTechnologyErrorState extends BreakingNewsAppStates {
   final String error;
-  NewAppGetTechnologyErrorState(this.error);
+  NewsAppGetTechnologyErrorState(this.error);
 }
 
-class NewAppGetSearchLodingState extends NewAppStates {}
+class NewsAppGetSearchLodingState extends BreakingNewsAppStates {}
 
-class NewAppGetSearchSuccessState extends NewAppStates {}
+class NewsAppGetSearchSuccessState extends BreakingNewsAppStates {}
 
-class NewAppGetSearchErrorState extends NewAppStates {
+class NewsAppGetSearchErrorState extends BreakingNewsAppStates {
   final String error;
-  NewAppGetSearchErrorState(this.error);
+  NewsAppGetSearchErrorState(this.error);
 }
 
-class ChangeModeApp extends NewAppStates {}
+class ChangeModeApp extends BreakingNewsAppStates {}
 
-class NewAppSelectPage1ItemState extends NewAppStates {}
+class NewsAppSelectPage1ItemState extends BreakingNewsAppStates {}
 
-class NewAppSetDesktopState extends NewAppStates {}
+class NewsAppSetDesktopState extends BreakingNewsAppStates {}
