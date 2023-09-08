@@ -4,11 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:new_app/shared/cubit/states.dart';
-
 import '../../modules/general_screen.dart';
 import '../../modules/sports_screen.dart';
 import '../../modules/technology_screen.dart';
+import '../components/constants.dart';
 import '../network/remote/dio_helper.dart';
 import 'states.dart';
 
@@ -20,18 +19,18 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
 
   int currentIndex = 0;
 
-  List<BottomNavigationBarItem> bottomNavItem = [
-    const BottomNavigationBarItem(
+  List<BottomNavigationBarItem> bottomNavItem = const [
+    BottomNavigationBarItem(
       icon: Icon(Icons.newspaper_rounded),
       label: 'General',
     ),
-    const BottomNavigationBarItem(
+    BottomNavigationBarItem(
       icon: Icon(
         Icons.sports_football_rounded,
       ),
       label: 'Sports',
     ),
-    const BottomNavigationBarItem(
+    BottomNavigationBarItem(
       icon: Icon(
         Icons.psychology_rounded,
       ),
@@ -76,7 +75,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
       query: {
         'country': 'us',
         'category': 'general',
-        'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
+        'apiKey': myApiKey,
       },
     ).then(
       (value) {
@@ -101,7 +100,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
         query: {
           'country': 'us',
           'category': 'sports',
-          'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
+          'apiKey': myApiKey,
         },
       ).then(
         (value) {
@@ -130,7 +129,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
         query: {
           'country': 'us',
           'category': 'technology',
-          'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
+          'apiKey': myApiKey,
         },
       ).then(
         (value) {
@@ -159,7 +158,7 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
       url: 'v2/everything',
       query: {
         'q': '$myValue',
-        'apiKey': '0ca74bfc0a0440a6897ed7b8742d47d6',
+        'apiKey': myApiKey,
       },
     ).then(
       (value) {

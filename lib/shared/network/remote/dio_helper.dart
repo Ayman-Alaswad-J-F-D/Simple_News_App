@@ -16,9 +16,13 @@ class DioHelper {
     required String url,
     required Map<String, dynamic> query,
   }) async {
-    return await dio!.get(
-      url,
-      queryParameters: query,
-    );
+    try {
+      return await dio!.get(
+        url,
+        queryParameters: query,
+      );
+    } on DioError catch (e) {
+      throw Exception('${e.response?.statusCode ?? "Error from Api"}');
+    }
   }
 }

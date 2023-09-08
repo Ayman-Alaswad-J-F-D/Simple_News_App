@@ -38,7 +38,6 @@ void main() async {
     () {
       // Use cubits...
       DioHelper.init();
-
       runApp(BreakingNewsApp(isDark));
     },
     blocObserver: MyBlocObserver(),

@@ -1,104 +1,97 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:hexcolor/hexcolor.dart';
+
+import '../styles/colors.dart';
+import '../styles/styles.dart';
 
 ThemeData darkTheme = ThemeData(
-  cardColor: Colors.black45.withOpacity(.1),
-  // ignore: deprecated_member_use
+  scaffoldBackgroundColor: AppColors.darkColor,
+  cardColor: AppColors.black45WithOpacity,
   useTextSelectionTheme: true,
   textTheme: TextTheme(
     bodyText1: TextStyle(
       fontSize: 20.0,
       fontWeight: FontWeight.w600,
-      color: Colors.indigo.shade200,
-      fontFamily: 'Tajawal',
+      fontFamily: AppFonts.primaty,
+      color: AppColors.primaryColorS200,
     ),
-    bodyText2: TextStyle(
-      color: Colors.indigo.shade300,
-    ),
+    bodyText2: TextStyle(color: AppColors.primaryColorS300),
   ),
-  scaffoldBackgroundColor: Color(0xff353A4F),
-  dividerColor: Colors.grey.shade200,
+  dividerColor: AppColors.greyS100,
   appBarTheme: AppBarTheme(
-    titleSpacing: 5,
-    iconTheme: const IconThemeData(
-      color: Colors.white,
-    ),
-    backgroundColor: Color(0xff353A4F),
     elevation: 2.0,
-    // ignore: deprecated_member_use
+    titleSpacing: 5,
+    backgroundColor: AppColors.darkColor,
+    iconTheme: const IconThemeData(color: AppColors.white),
     backwardsCompatibility: false,
     systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: Color(0xff353A4F),
+      statusBarColor: AppColors.darkColor,
       statusBarIconBrightness: Brightness.light,
     ),
     titleTextStyle: const TextStyle(
-      fontFamily: 'Tajawal',
-      color: Colors.white,
       fontSize: 20,
+      color: AppColors.white,
+      fontFamily: AppFonts.primaty,
       fontWeight: FontWeight.bold,
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    type: BottomNavigationBarType.fixed,
     elevation: 5.0,
-    backgroundColor: Color(0xff808B96),
-    unselectedItemColor: Colors.grey.shade50,
+    enableFeedback: true,
+    type: BottomNavigationBarType.fixed,
+    unselectedItemColor: AppColors.greyS50,
+    backgroundColor: AppColors.darkLightColor,
     selectedLabelStyle:
         const TextStyle(fontFamily: 'Tajawal', letterSpacing: 1.5),
     unselectedLabelStyle:
         const TextStyle(fontFamily: 'Tajawal', letterSpacing: 0.0),
-    selectedItemColor: Colors.indigo.shade700,
-    enableFeedback: true,
+    selectedItemColor: AppColors.primaryColorS700,
   ),
 );
 
 ///////////////////
 
 ThemeData lightTheme = ThemeData(
-  cardColor: Colors.grey.shade200,
+  cardColor: AppColors.greyS200,
   textTheme: TextTheme(
     bodyText1: TextStyle(
       fontSize: 20.0,
+      color: AppColors.black,
       fontWeight: FontWeight.w600,
-      color: Colors.black,
-      fontFamily: 'Tajawal',
+      fontFamily: AppFonts.primaty,
     ),
-    bodyText2: TextStyle(
-      color: Colors.grey.shade400,
-    ),
+    bodyText2: TextStyle(color: AppColors.greyS400),
   ),
-  primarySwatch: Colors.indigo,
-  scaffoldBackgroundColor: Colors.white,
+  primarySwatch: AppColors.primaryColor,
+  scaffoldBackgroundColor: AppColors.white,
   appBarTheme: AppBarTheme(
-    titleSpacing: 5.0,
-    iconTheme: const IconThemeData(
-      color: Colors.indigo,
-    ),
-    backgroundColor: Colors.white,
     elevation: 2.0,
-    // ignore: deprecated_member_use
+    titleSpacing: 5.0,
+    backgroundColor: Colors.white,
+    iconTheme: const IconThemeData(color: AppColors.primaryColor),
     backwardsCompatibility: false,
     systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: AppColors.white,
       statusBarBrightness: Brightness.light,
-      statusBarColor: Colors.white,
       statusBarIconBrightness: Brightness.dark,
     ),
     titleTextStyle: const TextStyle(
-      fontFamily: 'Tajawal',
-      color: Colors.indigo,
       fontSize: 20,
+      color: AppColors.primaryColor,
+      fontFamily: AppFonts.primaty,
       fontWeight: FontWeight.bold,
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    selectedLabelStyle:
-        const TextStyle(fontFamily: 'Tajawal', letterSpacing: 1.5),
-    unselectedLabelStyle:
-        const TextStyle(fontFamily: 'Tajawal', letterSpacing: 0.0),
-    type: BottomNavigationBarType.fixed,
     elevation: 5.0,
-    backgroundColor: Colors.white,
-    unselectedIconTheme: IconThemeData(color: Colors.grey.shade500),
+    backgroundColor: AppColors.white,
+    unselectedIconTheme: IconThemeData(color: AppColors.greyS500),
+    selectedLabelStyle:
+        const TextStyle(fontFamily: AppFonts.primaty, letterSpacing: 1.5),
+    unselectedLabelStyle:
+        const TextStyle(fontFamily: AppFonts.primaty, letterSpacing: 0.0),
+    type: BottomNavigationBarType.fixed,
   ),
 );

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_app/shared/components/components.dart';
 import 'package:new_app/shared/cubit/cubit.dart';
 import 'package:new_app/shared/cubit/states.dart';
+import 'package:new_app/shared/styles/colors.dart';
 
 import '../app_cubit/app_cubit.dart';
 import '../modules/search_screen.dart';
@@ -21,7 +22,6 @@ class LayoutScreen extends StatefulWidget {
 class _LayoutScreenState extends State<LayoutScreen>
     with SingleTickerProviderStateMixin {
   // late AnimationController _animatedLeading;
-
   // @override
   // void initState() {
   //   super.initState();
@@ -45,7 +45,17 @@ class _LayoutScreenState extends State<LayoutScreen>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is NewsAppGetGeneralErrorState ||
+            state is NewsAppGetSportsErrorState ||
+            state is NewsAppGetTechnologyErrorState)
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Somethins is Wrong !"),
+              backgroundColor: AppColors.red,
+            ),
+          );
+      },
       builder: (context, state) {
         var cubit = BreakingNewsAppCubit.get(context);
         return Scaffold(
@@ -69,33 +79,25 @@ class _LayoutScreenState extends State<LayoutScreen>
             // ),
             actions: [
               IconButton(
-                onPressed: () {
-                  navigateTo(context, SearchScreen());
-                },
                 icon: const Icon(Icons.search_rounded),
+                onPressed: () => navigateTo(context, SearchScreen()),
               ),
               IconButton(
-                onPressed: () {
-                  AppCubit.get(context).changeDarkMode();
-                },
                 icon: const Icon(Icons.brightness_4_outlined),
+                onPressed: () => AppCubit.get(context).changeDarkMode(),
               ),
             ],
           ),
           body: PageView(
             controller: controller,
-            allowImplicitScrolling: true,
-            onPageChanged: (index) {
-              cubit.changeBottomNavBar(index);
-            },
             children: cubit.screens,
+            allowImplicitScrolling: true,
+            onPageChanged: (index) => cubit.changeBottomNavBar(index),
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: cubit.bottomNavItem,
             currentIndex: cubit.currentIndex,
-            onTap: (index) {
-              controller.jumpToPage(index);
-            },
+            onTap: (index) => controller.jumpToPage(index),
           ),
         );
       },
