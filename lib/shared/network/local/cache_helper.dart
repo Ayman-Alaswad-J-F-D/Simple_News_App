@@ -1,21 +1,22 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CacheHelper {
-  static SharedPreferences? sharedPreferences;
-  static init() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+  static GetStorage storage = GetStorage();
+
+  static dynamic getData({required String key}) {
+    return storage.read(key);
   }
 
-  static Future<bool> putData({
+  static Future<void> saveData({
     required String key,
-    required bool value,
+    required dynamic value,
   }) async {
-    return await sharedPreferences!.setBool(key, value);
+    return await storage.write(key, value);
   }
 
-  static bool? getData({
+  static Future<void> removeData({
     required String key,
-  }) {
-    return sharedPreferences!.getBool(key);
+  }) async {
+    return await storage.remove(key);
   }
 }

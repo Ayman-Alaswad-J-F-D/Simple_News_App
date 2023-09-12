@@ -23,7 +23,7 @@ class ShimmerMobile extends StatelessWidget {
           itemCount: 4,
           itemBuilder: (context, index) => Shimmer.fromColors(
             baseColor: AppColors.greyS100,
-            highlightColor: AppColors.white.withOpacity(0.8),
+            highlightColor: AppColors.white.withOpacity(.5),
             child: Row(
               children: [
                 Padding(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:new_app/shared/components/custom_cache_network_image.dart';
 
 import '../../modules/web_view.dart';
 import '../cubit/cubit.dart';
-import '../styles/colors.dart';
-import 'components.dart';
+import '../extension/extension_navigation.dart';
 
 class BuildArticleItem extends StatelessWidget {
   const BuildArticleItem({
@@ -13,7 +14,7 @@ class BuildArticleItem extends StatelessWidget {
   }) : super(key: key);
 
   final int index;
-  final Map article;
+  final Map<String, dynamic> article;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class BuildArticleItem extends StatelessWidget {
           if (cubit.isDesktop == true)
             cubit.selectItemBuilder(index);
           else
-            navigateTo(context, WebViewScreen(article['url']));
+            context.toScreen(screen: WebViewScreen(article['url']));
         },
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -39,40 +40,6 @@ class BuildArticleItem extends StatelessWidget {
               TitleAndPublishWidget(article: article),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class TitleAndPublishWidget extends StatelessWidget {
-  const TitleAndPublishWidget({Key? key, required this.article})
-      : super(key: key);
-
-  final Map article;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        height: 120.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                '${article['title']}',
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-            Text(
-              'published At : ${article['publishedAt']}',
-              // DateFormat.yMMMd().format()
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-          ],
         ),
       ),
     );
@@ -91,21 +58,63 @@ class ImageWidget extends StatelessWidget {
       width: 130.0,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
+        clipBehavior: Clip.antiAlias,
         // ignore: unnecessary_null_comparison
-        child: imageUrl == null
-            ? Icon(Icons.image_not_supported_rounded, size: 80)
-            : Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  return const Icon(
-                    Icons.image_not_supported_rounded,
-                    color: AppColors.grey,
-                    size: 100,
-                  );
-                },
+        child: CustomCachedNetworkImage(
+          imageUrl: imageUrl,
+          fitImage: BoxFit.cover,
+          memCacheHeight: 150,
+          memCacheWidth: 150,
+          horizontal: 25,
+          vertical: 25,
+          sizeIcon: 100,
+          icon: Icons.image_not_supported_rounded,
+        ),
+      ),
+    );
+  }
+}
+
+class TitleAndPublishWidget extends StatelessWidget {
+  const TitleAndPublishWidget({Key? key, required this.article})
+      : super(key: key);
+
+  final Map<String, dynamic> article;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        height: 120.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(
+                '${article['title']}',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
+            ),
+            Row(
+              children: [
+                Text(
+                  'Published At: ',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      ?.copyWith(fontSize: 12),
+                ),
+                Text(
+                  DateFormat.yMMMd()
+                      .format(DateTime.parse(article['publishedAt'])),
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

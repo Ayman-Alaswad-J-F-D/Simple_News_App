@@ -18,25 +18,27 @@ class ShimmerDesktop extends StatelessWidget {
               itemCount: 3,
               itemBuilder: (context, index) => Shimmer.fromColors(
                 baseColor: AppColors.greyS100,
-                highlightColor: AppColors.white.withOpacity(0.8),
+                highlightColor: AppColors.white.withOpacity(.5),
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(17.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: myContainer(200, 200),
                     ),
-                    const SizedBox(width: 25),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        myContainer(450, 25),
-                        SizedBox(height: 10),
-                        myContainer(400, 30),
-                        SizedBox(height: 10),
-                        myContainer(400, 30),
-                        SizedBox(height: 10),
-                        myContainer(200, 25),
-                      ],
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          myContainer(420, 25),
+                          SizedBox(height: 10),
+                          myContainer(400, 30),
+                          SizedBox(height: 10),
+                          myContainer(400, 30),
+                          SizedBox(height: 10),
+                          myContainer(200, 25),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -48,7 +50,7 @@ class ShimmerDesktop extends StatelessWidget {
         Expanded(
           child: Shimmer.fromColors(
             baseColor: AppColors.greyS100,
-            highlightColor: AppColors.white.withOpacity(0.9),
+            highlightColor: AppColors.white,
             child: Padding(
               padding: const EdgeInsets.all(17.0),
               child: Column(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../cubit/cubit.dart';
 import '../styles/colors.dart';
 import 'articles_builder.dart';
+import 'custom_cache_network_image.dart';
 
 class DesktopItems extends StatelessWidget {
   const DesktopItems({Key? key, required this.list}) : super(key: key);
@@ -26,13 +27,21 @@ class DesktopItems extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomImage(list: list, cubit: cubit),
+                    CustomImage(
+                      imageUrl: list[cubit.selectedItem]['urlToImage'],
+                    ),
                     const SizedBox(height: 20),
-                    TitleWidget(list: list, cubit: cubit),
+                    TitleWidget(
+                      title: list[cubit.selectedItem]['title'],
+                    ),
                     const SizedBox(height: 10),
-                    DescriptionWidget(list: list, cubit: cubit),
+                    DescriptionWidget(
+                      description: list[cubit.selectedItem]['description'],
+                    ),
                     const SizedBox(height: 15),
-                    PublishedAtWidget(list: list, cubit: cubit),
+                    PublishedAtWidget(
+                      publishAt: list[cubit.selectedItem]['publishedAt'],
+                    ),
                   ],
                 ),
               ),
@@ -43,49 +52,32 @@ class DesktopItems extends StatelessWidget {
   }
 }
 
-class PublishedAtWidget extends StatelessWidget {
-  const PublishedAtWidget({
+class CustomImage extends StatelessWidget {
+  const CustomImage({
     Key? key,
-    required this.list,
-    required this.cubit,
+    required this.imageUrl,
   }) : super(key: key);
 
-  final List list;
-  final BreakingNewsAppCubit cubit;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          '${list[cubit.selectedItem]['publishedAt']}',
-          style: Theme.of(context).textTheme.bodyText2,
+    return Expanded(
+      child: Container(
+        height: 400,
+        width: double.infinity,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.0),
+          child: CustomCachedNetworkImage(
+            imageUrl: imageUrl,
+            horizontal: 300,
+            vertical: 180,
+            fitImage: BoxFit.fill,
+            icon: Icons.error,
+            sizeIcon: 150,
+          ),
         ),
-      ],
-    );
-  }
-}
-
-class DescriptionWidget extends StatelessWidget {
-  const DescriptionWidget({
-    Key? key,
-    required this.list,
-    required this.cubit,
-  }) : super(key: key);
-
-  final List list;
-  final BreakingNewsAppCubit cubit;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      list[cubit.selectedItem]['description'] == null
-          ? 'No Found Description'
-          : '${list[cubit.selectedItem]['description']}',
-      maxLines: 3,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(fontSize: 17, color: AppColors.greyS600),
+      ),
     );
   }
 }
@@ -93,58 +85,60 @@ class DescriptionWidget extends StatelessWidget {
 class TitleWidget extends StatelessWidget {
   const TitleWidget({
     Key? key,
-    required this.list,
-    required this.cubit,
+    required this.title,
   }) : super(key: key);
 
-  final List list;
-  final BreakingNewsAppCubit cubit;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${list[cubit.selectedItem]['title']}',
+      title,
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(fontSize: 24, color: AppColors.black),
+      style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 24),
     );
   }
 }
 
-class CustomImage extends StatelessWidget {
-  const CustomImage({
+class DescriptionWidget extends StatelessWidget {
+  const DescriptionWidget({
     Key? key,
-    required this.list,
-    required this.cubit,
+    required this.description,
   }) : super(key: key);
 
-  final List list;
-  final BreakingNewsAppCubit cubit;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      width: double.infinity,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15.0),
-        child: list[cubit.selectedItem]['urlToImage'] == null
-            ? Icon(Icons.image_not_supported_rounded, size: 140)
-            : Image.network(
-                list[cubit.selectedItem]['urlToImage'],
-                fit: BoxFit.cover,
-                errorBuilder: (
-                  BuildContext context,
-                  Object exception,
-                  StackTrace? stackTrace,
-                ) =>
-                    const Icon(
-                  Icons.image_not_supported_rounded,
-                  color: AppColors.grey,
-                  size: 100,
-                ),
-              ),
-      ),
+    return Text(
+      // ignore: unnecessary_null_comparison
+      description == null ? 'No Found Description' : description,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(fontSize: 17, color: AppColors.greyS600),
+    );
+  }
+}
+
+class PublishedAtWidget extends StatelessWidget {
+  const PublishedAtWidget({
+    Key? key,
+    required this.publishAt,
+  }) : super(key: key);
+
+  final String publishAt;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          publishAt,
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -19,25 +21,26 @@ class _WebViewScreenState extends State<WebViewScreen> {
       appBar: AppBar(),
       body: Stack(
         children: [
-          WebView(
-            initialUrl: widget.url,
-            onPageStarted: (value) {
-              setState(() {
-                linear = 0;
-              });
-            },
-            onProgress: (value) {
-              setState(() {
-                linear = value;
-              });
-            },
-            onPageFinished: (value) {
-              setState(() {
-                linear = 100;
-              });
-            },
-          ),
-          if (linear < 100)
+          if (!Platform.isWindows)
+            WebView(
+              initialUrl: widget.url,
+              onPageStarted: (value) {
+                setState(() {
+                  linear = 0;
+                });
+              },
+              onProgress: (value) {
+                setState(() {
+                  linear = value;
+                });
+              },
+              onPageFinished: (value) {
+                setState(() {
+                  linear = 100;
+                });
+              },
+            ),
+          if (linear < 100 && !Platform.isWindows)
             LinearProgressIndicator(
               value: linear / 100,
               minHeight: 6,

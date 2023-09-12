@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'app_cubit/app_cubit.dart';
 import 'app_cubit/app_states.dart';
@@ -10,13 +13,14 @@ import 'shared/network/local/cache_helper.dart';
 import 'shared/network/remote/dio_helper.dart';
 import 'shared/themes/themes.dart';
 
-import 'package:new_app/app_cubit/app_cubit.dart';
-import 'package:new_app/app_cubit/app_states.dart';
-import 'package:new_app/shared/bloc_observer.dart';
-import 'package:new_app/shared/cubit/cubit.dart';
-import 'package:new_app/shared/network/local/cache_helper.dart';
-import 'package:new_app/shared/network/remote/dio_helper.dart';
-import 'package:new_app/shared/themes/themes.dart';
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,12 +36,13 @@ void main() async {
   //     .navigate(url)
   //     .run();
 
-  await CacheHelper.init();
-  bool? isDark = CacheHelper.getData(key: 'isDark');
+  await GetStorage.init();
+  bool? isDark = CacheHelper.getData(key: 'isDark') ?? false;
   BlocOverrides.runZoned(
     () {
       // Use cubits...
       DioHelper.init();
+      HttpOverrides.global = MyHttpOverrides();
       runApp(BreakingNewsApp(isDark));
     },
     blocObserver: MyBlocObserver(),
@@ -45,8 +50,9 @@ void main() async {
 }
 
 class BreakingNewsApp extends StatelessWidget {
+  const BreakingNewsApp(this.isDark);
+
   final bool? isDark;
-  BreakingNewsApp(this.isDark);
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +68,15 @@ class BreakingNewsApp extends StatelessWidget {
             ..getTechnologyData(),
         ),
       ],
-      child: BlocConsumer<AppCubit, AppStates>(
-        listener: (context, state) {},
+      child: BlocBuilder<AppCubit, AppStates>(
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
+            theme: lightTheme,
             darkTheme: darkTheme,
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-            theme: lightTheme,
-            home: SplashScreen(),
+            home: const SplashScreen(),
           );
         },
       ),

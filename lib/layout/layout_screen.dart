@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:new_app/shared/components/components.dart';
-import 'package:new_app/shared/cubit/cubit.dart';
-import 'package:new_app/shared/cubit/states.dart';
-import 'package:new_app/shared/styles/colors.dart';
-
-import '../app_cubit/app_cubit.dart';
 import '../modules/search_screen.dart';
-import '../shared/components/components.dart';
+import '../app_cubit/app_cubit.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
+import '../shared/extension/extension_navigation.dart';
+import '../shared/styles/colors.dart';
 
 class LayoutScreen extends StatefulWidget {
-  LayoutScreen({Key? key}) : super(key: key);
+  const LayoutScreen({Key? key}) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
@@ -46,13 +42,13 @@ class _LayoutScreenState extends State<LayoutScreen>
   Widget build(BuildContext context) {
     return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {
-        if (state is NewsAppGetGeneralErrorState ||
-            state is NewsAppGetSportsErrorState ||
-            state is NewsAppGetTechnologyErrorState)
+        if (state is GetGeneralErrorState)
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Somethins is Wrong !"),
+              content:
+                  Text("Somethins is Wrong ! , Please Check Your Connection"),
               backgroundColor: AppColors.red,
+              duration: const Duration(seconds: 5),
             ),
           );
       },
@@ -80,7 +76,7 @@ class _LayoutScreenState extends State<LayoutScreen>
             actions: [
               IconButton(
                 icon: const Icon(Icons.search_rounded),
-                onPressed: () => navigateTo(context, SearchScreen()),
+                onPressed: () => context.toScreen(screen: SearchScreen()),
               ),
               IconButton(
                 icon: const Icon(Icons.brightness_4_outlined),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_app/shared/styles/colors.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../layout/new_app.dart';
+import '../layout/layout_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -12,8 +12,8 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       backgroundColor: AppColors.white,
-      splash: InitScreen(),
-      nextScreen: LayoutScreen(),
+      splash: const InitScreen(),
+      nextScreen: const LayoutScreen(),
       duration: 3000,
       splashIconSize: 330,
       splashTransition: SplashTransition.fadeTransition,

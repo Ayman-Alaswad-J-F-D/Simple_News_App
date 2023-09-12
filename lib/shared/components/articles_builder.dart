@@ -39,6 +39,3 @@ class ArticlesBuilder extends StatelessWidget {
             : const Center(child: CircularProgressIndicator());
   }
 }
-
-// Widget articlesBuilder(List list, BuildContext context, {isSearch = false}) =>
-   

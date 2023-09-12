@@ -19,6 +19,8 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
 
   int currentIndex = 0;
 
+  bool isLoading = false;
+
   List<BottomNavigationBarItem> bottomNavItem = const [
     BottomNavigationBarItem(
       icon: Icon(Icons.newspaper_rounded),
@@ -43,10 +45,10 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
   void changeBottomNavBar(int index) {
     currentIndex = index;
     if (index == 2) getTechnologyData();
-    emit(NewsAppBottomNavState());
+    emit(ChangeBottomNavState());
   }
 
-  List<Widget> screens = [
+  List<Widget> screens = const [
     GeneralScreen(),
     SportsScreen(),
     TechnologyScreen(),
@@ -59,17 +61,17 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
 
   void setDesktop(bool value) {
     isDesktop = value;
-    emit(NewsAppSetDesktopState());
+    emit(SetDesktopState());
   }
 
   int selectedItem = 0;
   void selectItemBuilder(index) {
     selectedItem = index;
-    emit(NewsAppSelectPage1ItemState());
+    emit(SelectPageItemState());
   }
 
   void getGeneralData() async {
-    emit(NewsAppGetGeneralLodingState());
+    emit(GetGeneralLodingState());
     await DioHelper.getData(
       url: 'v2/top-headlines',
       query: {
@@ -82,18 +84,18 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
         generalList = value.data["articles"];
         print(value.data["articles"][0]["title"]);
         // print(page1[0]['title']);
-        emit(NewsAppGetGeneralSuccessState());
+        emit(GetGeneralSuccessState());
       },
     ).catchError(
       (error) {
         print(error.toString());
-        emit(NewsAppGetGeneralErrorState(error.toString()));
+        emit(GetGeneralErrorState(error.toString()));
       },
     );
   }
 
   void getSportsData() async {
-    emit(NewsAppGetSportsLodingState());
+    emit(GetSportsLodingState());
     if (sportList.isEmpty) {
       await DioHelper.getData(
         url: 'v2/top-headlines',
@@ -108,21 +110,21 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
 
           print(value.data["articles"][0]["title"]);
           // print(page1[0]['title']);
-          emit(NewsAppGetSportsSuccessState());
+          emit(GetSportsSuccessState());
         },
       ).catchError(
         (error) {
           print(error.toString());
-          emit(NewsAppGetSportsErrorState(error.toString()));
+          emit(GetSportsErrorState(error.toString()));
         },
       );
     } else {
-      emit(NewsAppGetSportsSuccessState());
+      emit(GetSportsSuccessState());
     }
   }
 
   void getTechnologyData() async {
-    emit(NewsAppGetTechnologyLodingState());
+    emit(GetTechnologyLodingState());
     if (technologyList.isEmpty) {
       await DioHelper.getData(
         url: 'v2/top-headlines',
@@ -137,23 +139,23 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
 
           print(value.data["articles"][0]["title"]);
           // print(page1[0]['title']);
-          emit(NewsAppGetTechnologySuccessState());
+          emit(GetTechnologySuccessState());
         },
       ).catchError(
         (error) {
           print(error.toString());
-          emit(NewsAppGetTechnologyErrorState(error.toString()));
+          emit(GetTechnologyErrorState(error.toString()));
         },
       );
     } else {
-      emit(NewsAppGetTechnologySuccessState());
+      emit(GetTechnologySuccessState());
     }
   }
 
   List<dynamic> search = [];
 
   void getSearch(myValue) {
-    emit(NewsAppGetSearchLodingState());
+    emit(GetSearchLodingState());
     DioHelper.getData(
       url: 'v2/everything',
       query: {
@@ -165,12 +167,12 @@ class BreakingNewsAppCubit extends Cubit<BreakingNewsAppStates> {
         search = value.data["articles"];
         // print(value.data["articles"][0]["title"]);
         // print(page1[0]['title']);
-        emit(NewsAppGetSearchSuccessState());
+        emit(GetSearchSuccessState());
       },
     ).catchError(
       (error) {
         print(error.toString());
-        emit(NewsAppGetSearchErrorState(error.toString()));
+        emit(GetSearchErrorState(error.toString()));
       },
     );
   }

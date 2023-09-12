@@ -9,25 +9,23 @@ import '../shared/components/shimmer_mobile.dart';
 import '../shared/cubit/cubit.dart';
 import '../shared/cubit/states.dart';
 
-// ignore: must_be_immutable
 class GeneralScreen extends StatelessWidget {
-  GeneralScreen({Key? key}) : super(key: key);
-  bool isLoading = false;
+  const GeneralScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var cubit = BreakingNewsAppCubit.get(context);
     return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {
-        if (state is NewsAppGetGeneralSuccessState) isLoading = true;
+        if (state is GetGeneralSuccessState) cubit.isLoading = true;
       },
       builder: (context, state) {
         return ScreenTypeLayout(
           breakpoints: ScreenBreakpoints(desktop: 700, tablet: 600, watch: 100),
-          mobile: isLoading && cubit.generalList.isNotEmpty
+          mobile: cubit.isLoading && cubit.generalList.isNotEmpty
               ? BuilderMobile(cubit: cubit, list: cubit.generalList)
               : ShimmerMobile(),
-          desktop: isLoading && cubit.generalList.isNotEmpty
+          desktop: cubit.isLoading && cubit.generalList.isNotEmpty
               ? BuilderDesktop(cubit: cubit, list: cubit.generalList)
               : ShimmerDesktop(),
         );

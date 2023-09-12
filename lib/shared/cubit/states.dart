@@ -2,46 +2,46 @@ abstract class BreakingNewsAppStates {}
 
 class NewAppInitialState extends BreakingNewsAppStates {}
 
-class NewsAppBottomNavState extends BreakingNewsAppStates {}
+class ChangeBottomNavState extends BreakingNewsAppStates {}
 
-class NewsAppGetGeneralLodingState extends BreakingNewsAppStates {}
+class GetGeneralLodingState extends BreakingNewsAppStates {}
 
-class NewsAppGetGeneralSuccessState extends BreakingNewsAppStates {}
+class GetGeneralSuccessState extends BreakingNewsAppStates {}
 
-class NewsAppGetGeneralErrorState extends BreakingNewsAppStates {
+class GetGeneralErrorState extends BreakingNewsAppStates {
   final String error;
-  NewsAppGetGeneralErrorState(this.error);
+  GetGeneralErrorState(this.error);
 }
 
-class NewsAppGetSportsLodingState extends BreakingNewsAppStates {}
+class GetSportsLodingState extends BreakingNewsAppStates {}
 
-class NewsAppGetSportsSuccessState extends BreakingNewsAppStates {}
+class GetSportsSuccessState extends BreakingNewsAppStates {}
 
-class NewsAppGetSportsErrorState extends BreakingNewsAppStates {
+class GetSportsErrorState extends BreakingNewsAppStates {
   final String error;
-  NewsAppGetSportsErrorState(this.error);
+  GetSportsErrorState(this.error);
 }
 
-class NewsAppGetTechnologyLodingState extends BreakingNewsAppStates {}
+class GetTechnologyLodingState extends BreakingNewsAppStates {}
 
-class NewsAppGetTechnologySuccessState extends BreakingNewsAppStates {}
+class GetTechnologySuccessState extends BreakingNewsAppStates {}
 
-class NewsAppGetTechnologyErrorState extends BreakingNewsAppStates {
+class GetTechnologyErrorState extends BreakingNewsAppStates {
   final String error;
-  NewsAppGetTechnologyErrorState(this.error);
+  GetTechnologyErrorState(this.error);
 }
 
-class NewsAppGetSearchLodingState extends BreakingNewsAppStates {}
+class GetSearchLodingState extends BreakingNewsAppStates {}
 
-class NewsAppGetSearchSuccessState extends BreakingNewsAppStates {}
+class GetSearchSuccessState extends BreakingNewsAppStates {}
 
-class NewsAppGetSearchErrorState extends BreakingNewsAppStates {
+class GetSearchErrorState extends BreakingNewsAppStates {
   final String error;
-  NewsAppGetSearchErrorState(this.error);
+  GetSearchErrorState(this.error);
 }
 
 class ChangeModeApp extends BreakingNewsAppStates {}
 
-class NewsAppSelectPage1ItemState extends BreakingNewsAppStates {}
+class SelectPageItemState extends BreakingNewsAppStates {}
 
-class NewsAppSetDesktopState extends BreakingNewsAppStates {}
+class SetDesktopState extends BreakingNewsAppStates {}
