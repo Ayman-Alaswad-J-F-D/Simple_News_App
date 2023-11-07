@@ -99,13 +99,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  convex_bottom_bar:
-    dependency: "direct main"
-    description:
-      name: convex_bottom_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   crypto:
     dependency: transitive
     description:
@@ -120,13 +113,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
-  desktop_window:
-    dependency: "direct main"
-    description:
-      name: desktop_window
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   dio:
     dependency: "direct main"
     description:
@@ -195,6 +181,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -248,7 +239,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.1"
+    version: "0.17.0"
   lints:
     dependency: transitive
     description:
@@ -389,13 +380,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.3"
-  responsive_builder:
-    dependency: "direct main"
-    description:
-      name: responsive_builder
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.2"
   rxdart:
     dependency: transitive
     description:
