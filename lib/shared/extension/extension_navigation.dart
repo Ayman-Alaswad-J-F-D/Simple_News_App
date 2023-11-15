@@ -12,3 +12,7 @@ extension NavigatorPushAndRemoveUntil on BuildContext {
         (route) => false,
       );
 }
+
+extension NavigatorBack on BuildContext {
+  back(context) => Navigator.of(context).pop();
+}
