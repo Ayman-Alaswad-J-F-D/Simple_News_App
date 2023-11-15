@@ -1,100 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../modules/search_screen.dart';
-import '../app_cubit/app_cubit.dart';
-import '../shared/cubit/cubit.dart';
-import '../shared/cubit/states.dart';
-import '../shared/extension/extension_navigation.dart';
-import '../shared/styles/colors.dart';
+import 'package:new_app/generated/l10n.dart';
+import 'package:new_app/shared/components/components.dart';
+import 'package:new_app/shared/extension/extension_navigation.dart';
 
-class LayoutScreen extends StatefulWidget {
+import '../logic/cubit/cubit.dart';
+import '../logic/cubit/states.dart';
+import '../modules/search_screen.dart';
+import '../shared/styles/colors.dart';
+import '../shared/utils/responsive.dart';
+import 'components/all_bottom_nav_bar_items.dart';
+import 'components/bottom_nav_bar.dart';
+import 'components/icon_search.dart';
+import 'components/popup_menu_app.dart';
+
+class LayoutScreen extends StatelessWidget {
   const LayoutScreen({Key? key}) : super(key: key);
 
   @override
-  State<LayoutScreen> createState() => _LayoutScreenState();
-}
-
-class _LayoutScreenState extends State<LayoutScreen>
-    with SingleTickerProviderStateMixin {
-  // late AnimationController _animatedLeading;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _animatedLeading =
-  //       AnimationController(vsync: this, duration: Duration(seconds: 1));
-  // }
-
-  // bool moveIconLeading = false;
-  // void _iconTapped() {
-  //   if (moveIconLeading == false) {
-  //     _animatedLeading.forward();
-  //     moveIconLeading = true;
-  //   } else {
-  //     _animatedLeading.reverse();
-  //     moveIconLeading = false;
-  //   }
-  // }
-
-  final PageController controller = PageController();
-
-  @override
   Widget build(BuildContext context) {
+    final PageController controller = PageController();
+    final cubit = BreakingNewsAppCubit.get(context);
+
     return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {
-        if (state is GetGeneralErrorState)
+        if (state is LostConnectionState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content:
-                  Text("Somethins is Wrong ! , Please Check Your Connection"),
-              backgroundColor: AppColors.red,
-              duration: const Duration(seconds: 5),
+            snackBarMessage(
+              Message: S.of(context).ErrorConnection,
+              color: AppColors.red,
+              duration: 12,
+              actionTextButton: SnackBarAction(
+                textColor: Theme.of(context).textTheme.caption?.color,
+                label: S.of(context).Refresh,
+                onPressed: () => cubit.fetchAllData(),
+              ),
             ),
           );
+        } else if (state is GetGeneralErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            snackBarMessage(Message: S.of(context).SomethingIsWrong),
+          );
+        } else if (state is GetGeneralSuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            snackBarMessage(
+              Message: S.of(context).Done,
+              color: AppColors.primaryColor,
+            ),
+          );
+        }
       },
       builder: (context, state) {
-        var cubit = BreakingNewsAppCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
-            title: const Text('Breaking News'),
-            leading: Padding(
-              padding: const EdgeInsets.only(top: 0, left: 4),
-              child: Icon(Icons.hdr_strong_rounded, size: 30),
-            ),
-            // leading: Padding(
-            //   padding: const EdgeInsets.only(top: 5, left: 8),
-            //   child: GestureDetector(
-            //     onTap: _iconTapped,
-            //     child: AnimatedIcon(
-            //       icon: AnimatedIcons.list_view,
-            //       progress: _animatedLeading,
-            //       size: 40,
-            //     ),
-            //   ),
-            // ),
+            title: Text(S.of(context).TitleApp),
+            leading: Icon(Icons.hdr_strong_rounded, size: 30),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.search_rounded),
+              IconSearch(
+                icon: Icons.search_rounded,
                 onPressed: () => context.toScreen(screen: SearchScreen()),
               ),
-              IconButton(
-                icon: const Icon(Icons.brightness_4_outlined),
-                onPressed: () => AppCubit.get(context).changeDarkMode(),
+              PopupMenuApp(),
+            ],
+          ),
+          body: Row(
+            children: [
+              if (Responsive.isDesktop(context) || Responsive.isTablet(context))
+                Flexible(
+                  flex: 0,
+                  child: NavigationRail(
+                    elevation: 7,
+                    destinations: bottomNavItemForDesktop(context),
+                    selectedIndex: cubit.currentIndex,
+                    onDestinationSelected: (index) =>
+                        controller.jumpToPage(index),
+                  ),
+                ),
+              Expanded(
+                child: PageView(
+                  controller: controller,
+                  children: cubit.screens,
+                  allowImplicitScrolling: true,
+                  onPageChanged: (index) => cubit.changeBottomNavBar(index),
+                ),
               ),
             ],
           ),
-          body: PageView(
-            controller: controller,
-            children: cubit.screens,
-            allowImplicitScrolling: true,
-            onPageChanged: (index) => cubit.changeBottomNavBar(index),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: cubit.bottomNavItem,
-            currentIndex: cubit.currentIndex,
-            onTap: (index) => controller.jumpToPage(index),
-          ),
+          bottomNavigationBar:
+              !Responsive.isDesktop(context) && !Responsive.isTablet(context)
+                  ? BottomNavBar(cubit: cubit, pageControl: controller)
+                  : SizedBox(),
         );
       },
     );
