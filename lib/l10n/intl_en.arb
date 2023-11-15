@@ -1,0 +1,22 @@
+{
+    "TitleApp":"Breaking News",
+    "LabelTec":"Technology",
+    "LabelGen":"General",
+    "LabelSpo":"Sports",
+    "Refresh":"Refresh",
+    "English":"English",
+    "Arabic":"Arabic",
+    "Search":"Search",
+    "Done":"Done",
+    "PublishedAt":"Published At",
+    "NewsApp":"News App",
+    "DarkMode":"Dark Mode",
+    "LightMode":"Light Mode",
+    "ChangeLanguage":"Change Language",
+    "ChoiceLanguage":"Please Choice Language",
+    "SomethingIsWrong":"Something is Wrong !",
+    "NoFoundDescription":"No Found Description",
+    "SearchMustNotBeEmpty":"Search must not be empty",
+    "ErrorConnection":"No Connection Available, Please Check Your Connection."
+
+}

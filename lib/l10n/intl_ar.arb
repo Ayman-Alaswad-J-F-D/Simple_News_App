@@ -1,0 +1,21 @@
+{
+    "TitleApp":"الأخبار العاجلة",
+    "LabelTec":"التكنولوجيا",
+    "LabelGen":"لمحة عامة",
+    "LabelSpo":"الرياضة",
+    "Refresh":"تحديث",
+    "English":"انكليزي",
+    "Arabic":"عربي",
+    "Search":"بحث",
+    "Done":"تم",
+    "PublishedAt":"نشرت في",
+    "NewsApp":"تطبيق الأخبار",
+    "DarkMode":"الوضع المظلم",
+    "LightMode":"الوضع الفاتح",
+    "ChangeLanguage":"تغيير اللغة",
+    "ChoiceLanguage":"الرجاء أختيار لغة",
+    "SomethingIsWrong":"هناك شيء خاطئ !",
+    "NoFoundDescription":"لم يتم العثور على وصف",
+    "SearchMustNotBeEmpty":"يجب ألا يكون البحث فارغا",
+    "ErrorConnection":"لا يوجد اتصال متاح ، يرجى التحقق من اتصالك."
+}
