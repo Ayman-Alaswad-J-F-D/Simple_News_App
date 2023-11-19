@@ -14,7 +14,6 @@ ThemeData darkTheme = ThemeData(
     caption: TextStyle(
       fontSize: 16.0,
       fontFamily: AppFonts.primaty,
-      fontWeight: FontWeight.w600,
       color: AppColors.white,
     ),
     bodyText1: TextStyle(
@@ -26,9 +25,9 @@ ThemeData darkTheme = ThemeData(
     bodyText2: TextStyle(color: AppColors.darkLightColor),
   ),
   dividerColor: AppColors.white24,
-
-  radioTheme:
-      RadioThemeData(fillColor: MaterialStateProperty.all(AppColors.white)),
+  radioTheme: RadioThemeData(
+    fillColor: MaterialStateProperty.all(AppColors.white),
+  ),
 
   appBarTheme: AppBarTheme(
     elevation: 2.0,
@@ -47,9 +46,13 @@ ThemeData darkTheme = ThemeData(
       fontWeight: FontWeight.bold,
     ),
   ),
-  iconTheme: IconThemeData(color: AppColors.white),
-  popupMenuTheme: PopupMenuThemeData(color: AppColors.primaryDark),
 
+  iconTheme: IconThemeData(color: AppColors.primaryColorS200),
+  popupMenuTheme: PopupMenuThemeData(color: AppColors.primaryDark),
+  scrollbarTheme: ScrollbarThemeData(
+    thumbColor:
+        MaterialStateProperty.all(AppColors.primaryColorS200.withOpacity(.4)),
+  ),
   //* Navigation Rail ThemeData For Desktop
   navigationRailTheme: NavigationRailThemeData(
     useIndicator: true,
@@ -76,7 +79,7 @@ ThemeData darkTheme = ThemeData(
     floatingLabelStyle: TextStyle(color: AppColors.primaryColorS200),
     prefixIconColor: AppColors.primaryColorS200,
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(color: AppColors.primaryColorS200),
     ),
     focusedBorder: OutlineInputBorder(
@@ -102,12 +105,12 @@ ThemeData darkTheme = ThemeData(
 
 ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.white,
-  cardColor: AppColors.greyS200,
+  cardColor: AppColors.greyS300,
+  useTextSelectionTheme: true,
   textTheme: TextTheme(
     caption: TextStyle(
       fontSize: 16.0,
       fontFamily: AppFonts.primaty,
-      fontWeight: FontWeight.w600,
       color: AppColors.primaryColor,
     ),
     bodyText1: TextStyle(
@@ -116,12 +119,13 @@ ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.w600,
       fontFamily: AppFonts.primaty,
     ),
-    bodyText2: TextStyle(color: AppColors.greyS400),
+    bodyText2: TextStyle(color: AppColors.grey),
   ),
   primarySwatch: AppColors.primaryColor,
   dividerColor: AppColors.greyS400,
   radioTheme: RadioThemeData(
-      fillColor: MaterialStateProperty.all(AppColors.primaryColor)),
+    fillColor: MaterialStateProperty.all(AppColors.primaryColor),
+  ),
 
   appBarTheme: AppBarTheme(
     elevation: 2.0,
@@ -143,7 +147,10 @@ ThemeData lightTheme = ThemeData(
   ),
   iconTheme: IconThemeData(color: AppColors.primaryColor),
   popupMenuTheme: PopupMenuThemeData(color: AppColors.white),
-
+  scrollbarTheme: ScrollbarThemeData(
+    thumbColor:
+        MaterialStateProperty.all(AppColors.primaryColorS200.withOpacity(.6)),
+  ),
   //* Navigation Rail ThemeData For Desktop
   navigationRailTheme: NavigationRailThemeData(
     backgroundColor: AppColors.primaryColor,
@@ -169,12 +176,8 @@ ThemeData lightTheme = ThemeData(
 
   inputDecorationTheme: InputDecorationTheme(
     floatingLabelStyle: TextStyle(color: AppColors.primaryColor),
-    counterStyle: TextStyle(color: AppColors.primaryColor),
-    hintStyle: TextStyle(color: AppColors.primaryColor),
-    prefixStyle: TextStyle(color: AppColors.primaryColor),
-    prefixIconColor: AppColors.primaryColor,
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(color: AppColors.darkLightColor),
     ),
     focusedBorder: OutlineInputBorder(
