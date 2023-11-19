@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:new_app/generated/l10n.dart';
 import 'package:new_app/shared/components/custom_cache_network_image.dart';
-
+import 'package:new_app/shared/utils/responsive.dart';
+import '../../logic/cubit/cubit.dart';
+import '../../logic/models/news_model.dart';
 import '../../modules/web_view.dart';
-import '../cubit/cubit.dart';
 import '../extension/extension_navigation.dart';
 
 class BuildArticleItem extends StatelessWidget {
@@ -14,35 +16,52 @@ class BuildArticleItem extends StatelessWidget {
   }) : super(key: key);
 
   final int index;
-  final Map<String, dynamic> article;
+  final ArticlesModel article;
 
   @override
   Widget build(BuildContext context) {
-    var imageUrl = '${article['urlToImage']}';
-    var cubit = BreakingNewsAppCubit.get(context);
+    final imageUrl = '${article.urlToImage}';
+    final cubit = BreakingNewsAppCubit.get(context);
     return Container(
-      color: cubit.selectedItem == index && cubit.isDesktop
+      height: _flexableHiegth(context),
+      color: cubit.selectedItem == index && Responsive.isDesktop(context)
           ? Theme.of(context).cardColor
           : null,
       child: InkWell(
         onTap: () {
-          if (cubit.isDesktop == true)
+          if (Responsive.isDesktop(context))
             cubit.selectItemBuilder(index);
           else
-            context.toScreen(screen: WebViewScreen(article['url']));
+            context.toScreen(screen: WebViewScreen(article.url ?? ''));
         },
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
               ImageWidget(imageUrl: imageUrl),
-              const SizedBox(width: 20.0),
-              TitleAndPublishWidget(article: article),
+              const SizedBox(width: 18.0),
+              ArticleInfo(article: article),
             ],
           ),
         ),
       ),
     );
+  }
+
+  double _flexableHiegth(context) {
+    if (Responsive.isDesktop(context)) {
+      //* >= 1024
+      return MediaQuery.of(context).size.height / 3;
+    } else if (Responsive.isTablet(context)) {
+      //* >= 801 && <= 1024
+      return MediaQuery.of(context).size.height / 4;
+    } else if (Responsive.isMobileLarge(context)) {
+      //* >= 501 && <= 800
+      return MediaQuery.of(context).size.height / 4.4;
+    } else {
+      //* <= 500
+      return MediaQuery.of(context).size.height / 4.8;
+    }
   }
 }
 
@@ -53,68 +72,72 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 130.0,
-      width: 130.0,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15.0),
-        clipBehavior: Clip.antiAlias,
-        // ignore: unnecessary_null_comparison
-        child: CustomCachedNetworkImage(
-          imageUrl: imageUrl,
-          fitImage: BoxFit.cover,
-          memCacheHeight: 150,
-          memCacheWidth: 150,
-          horizontal: 25,
-          vertical: 25,
-          sizeIcon: 100,
-          icon: Icons.image_not_supported_rounded,
+    return Expanded(
+      flex: 3,
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: CustomCachedNetworkImage(
+            imageUrl: imageUrl,
+            fitImage: BoxFit.cover,
+            memCacheHeight: 150,
+            memCacheWidth: 150,
+            sizeIcon: 90,
+            icon: Icons.image_not_supported_rounded,
+          ),
         ),
       ),
     );
   }
 }
 
-class TitleAndPublishWidget extends StatelessWidget {
-  const TitleAndPublishWidget({Key? key, required this.article})
-      : super(key: key);
+class ArticleInfo extends StatelessWidget {
+  const ArticleInfo({Key? key, required this.article}) : super(key: key);
 
-  final Map<String, dynamic> article;
+  final ArticlesModel article;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        height: 120.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                '${article['title']}',
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
+      flex: 4,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              '${article.title}',
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
-            Row(
-              children: [
-                Text(
-                  'Published At: ',
+          ),
+          Row(
+            children: [
+              Flexible(
+                child: Text(
+                  S.of(context).PublishedAt + ' : ',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText2
                       ?.copyWith(fontSize: 12),
                 ),
-                Text(
+              ),
+              Expanded(
+                child: Text(
                   DateFormat.yMMMd()
-                      .format(DateTime.parse(article['publishedAt'])),
+                      .format(DateTime.parse('${article.publishedAt}')),
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
