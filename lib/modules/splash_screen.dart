@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:new_app/shared/styles/colors.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -22,8 +23,39 @@ class SplashScreen extends StatelessWidget {
   }
 }
 
-class InitScreen extends StatelessWidget {
+class InitScreen extends StatefulWidget {
   const InitScreen({Key? key}) : super(key: key);
+
+  @override
+  State<InitScreen> createState() => _InitScreenState();
+}
+
+class _InitScreenState extends State<InitScreen> {
+  late final Image splashIcon;
+  @override
+  void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    splashIcon = Image.asset(
+      'assets/images/icon_app.png',
+      filterQuality: FilterQuality.low,
+    );
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    precacheImage(splashIcon.image, context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +66,7 @@ class InitScreen extends StatelessWidget {
           radius: 90,
           backgroundColor: AppColors.white,
           foregroundColor: AppColors.white,
-          backgroundImage: AssetImage('assets/images/breaking-news-.jpg'),
+          backgroundImage: splashIcon.image,
         ),
         SizedBox(height: 40),
         RichText(
