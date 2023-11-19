@@ -2,46 +2,71 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_app/generated/l10n.dart';
+import 'package:new_app/shared/extension/extension_navigation.dart';
 
-import '../shared/components/articles_builder.dart';
+import '../logic/cubit/cubit.dart';
+import '../logic/cubit/states.dart';
+import '../shared/components/build_articales.dart';
 import '../shared/components/custom_text_form_field.dart';
-import '../shared/cubit/cubit.dart';
-import '../shared/cubit/states.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({Key? key}) : super(key: key);
-
-  var searchController = TextEditingController();
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BreakingNewsAppCubit, BreakingNewsAppStates>(
-      builder: (context, state) {
-        var list = BreakingNewsAppCubit.get(context).search;
-        return Scaffold(
-          appBar: AppBar(elevation: 0.0),
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: CustomTextFormField(
-                  label: 'Search',
-                  typeInput: TextInputType.text,
-                  textEditingController: searchController,
-                  prefixIcon: const Icon(Icons.search_rounded),
-                  onChange: (value) =>
-                      BreakingNewsAppCubit.get(context).getSearch(value),
-                  validate: (value) {
-                    if (value!.isEmpty) return 'search must not be empty';
-                    return null;
-                  },
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      icon: Icon(Icons.arrow_back_ios_outlined),
+                      onPressed: () => context.back(context),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                          bottom: 10,
+                          top: 15,
+                          end: 20,
+                        ),
+                        child: BlocBuilder<BreakingNewsAppCubit,
+                            BreakingNewsAppStates>(
+                          builder: (context, state) {
+                            final cubit = BreakingNewsAppCubit.get(context);
+                            return CustomTextFormField(
+                              label: S.of(context).Search,
+                              typeInput: TextInputType.text,
+                              suffixIcon: Icons.search_rounded,
+                              onChange: (value) =>
+                                  cubit.searchFromLists(value: value),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Expanded(child: ArticlesBuilder(list: list, isSearch: true)),
-            ],
-          ),
-        );
-      },
+            ),
+            Expanded(
+              child: BlocBuilder<BreakingNewsAppCubit, BreakingNewsAppStates>(
+                builder: (context, state) => ArticlesBuilder(
+                  articles: BreakingNewsAppCubit.get(context).searchList,
+                  isSearch: true,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
