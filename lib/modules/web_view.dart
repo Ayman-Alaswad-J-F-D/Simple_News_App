@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:new_app/generated/l10n.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
@@ -13,36 +15,45 @@ class WebViewScreen extends StatefulWidget {
 }
 
 class _WebViewScreenState extends State<WebViewScreen> {
-  var linear = 0;
+  double linear = 0;
+  late InAppWebViewController webView;
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(S.of(context).NewsApp),
+      ),
       body: Stack(
         children: [
           if (!Platform.isWindows)
-            WebView(
-              initialUrl: widget.url,
-              onPageStarted: (value) {
+            InAppWebView(
+              initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
+              onWebViewCreated: (InAppWebViewController cont) {
+                webView = cont;
+              },
+              onProgressChanged: (InAppWebViewController cont, int progress) {
                 setState(() {
-                  linear = 0;
+                  linear = progress / 100;
                 });
               },
-              onProgress: (value) {
-                setState(() {
-                  linear = value;
-                });
-              },
-              onPageFinished: (value) {
-                setState(() {
-                  linear = 100;
-                });
-              },
+            )
+          else
+            Center(
+              child: TextButton(
+                child: Text('${widget.url}'),
+                onPressed: () => _launchUrl(widget.url),
+              ),
             ),
-          if (linear < 100 && !Platform.isWindows)
+          if (linear < 1.0 && !Platform.isWindows)
             LinearProgressIndicator(
-              value: linear / 100,
+              value: linear,
               minHeight: 6,
             ),
         ],
