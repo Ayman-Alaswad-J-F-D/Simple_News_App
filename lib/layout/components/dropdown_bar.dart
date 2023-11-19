@@ -15,7 +15,7 @@ class DropdownBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = cubit.isArabic ? 'Arabic' : 'English';
+    String dropdownValue = isArabic ? 'Arabic' : 'English';
 
     return Padding(
       padding: EdgeInsets.only(
