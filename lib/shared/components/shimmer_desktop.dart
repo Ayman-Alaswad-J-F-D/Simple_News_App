@@ -14,36 +14,40 @@ class ShimmerDesktop extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(5.0),
-            child: ListView.separated(
-              itemCount: 3,
-              itemBuilder: (context, index) => Shimmer.fromColors(
-                baseColor: AppColors.greyS100,
-                highlightColor: AppColors.white.withOpacity(.5),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: myContainer(200, 200),
+            child: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(
+                children: List<Widget>.generate(
+                  3,
+                  (index) => Shimmer.fromColors(
+                    baseColor: AppColors.greyS100,
+                    highlightColor: AppColors.white.withOpacity(.5),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: ShimmerContainer(height: 200, isDesktop: true),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShimmerContainer(width: 4.5, height: 25),
+                              SizedBox(height: 10),
+                              ShimmerContainer(width: 4, height: 20),
+                              SizedBox(height: 10),
+                              ShimmerContainer(width: 4, height: 20),
+                              SizedBox(height: 10),
+                              ShimmerContainer(width: 5, height: 25),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          myContainer(420, 25),
-                          SizedBox(height: 10),
-                          myContainer(400, 30),
-                          SizedBox(height: 10),
-                          myContainer(400, 30),
-                          SizedBox(height: 10),
-                          myContainer(200, 25),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-              separatorBuilder: (context, index) => SizedBox(),
             ),
           ),
         ),
@@ -56,13 +60,13 @@ class ShimmerDesktop extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  myContainer(670, 300),
-                  SizedBox(height: 30),
-                  myContainer(630, 40),
+                  ShimmerContainer(width: 1, height: 380),
+                  SizedBox(height: 40),
+                  ShimmerContainer(width: 3, height: 40),
                   SizedBox(height: 10),
-                  myContainer(550, 55),
+                  ShimmerContainer(width: 2.5, height: 45),
                   SizedBox(height: 25),
-                  myContainer(250, 30)
+                  ShimmerContainer(width: 5, height: 30),
                 ],
               ),
             ),
