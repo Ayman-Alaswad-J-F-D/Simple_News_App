@@ -21,10 +21,10 @@ class LayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
-    final cubit = BreakingNewsAppCubit.get(context);
 
     return BlocConsumer<BreakingNewsAppCubit, BreakingNewsAppStates>(
       listener: (context, state) {
+        final cubit = BreakingNewsAppCubit.get(context);
         if (state is LostConnectionState) {
           ScaffoldMessenger.of(context).showSnackBar(
             snackBarMessage(
@@ -52,6 +52,7 @@ class LayoutScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        final cubit = BreakingNewsAppCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
@@ -73,7 +74,7 @@ class LayoutScreen extends StatelessWidget {
                   child: NavigationRail(
                     elevation: 7,
                     destinations: bottomNavItemForDesktop(context),
-                    selectedIndex: cubit.currentIndex,
+                    selectedIndex: cubit.screenIndex,
                     onDestinationSelected: (index) =>
                         controller.jumpToPage(index),
                   ),
