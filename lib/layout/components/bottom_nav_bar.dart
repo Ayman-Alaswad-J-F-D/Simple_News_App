@@ -30,7 +30,7 @@ class BottomNavBar extends StatelessWidget {
       ),
       child: NavigationBar(
         animationDuration: const Duration(seconds: 1),
-        selectedIndex: cubit.currentIndex,
+        selectedIndex: cubit.screenIndex,
         onDestinationSelected: (index) => pageControl.jumpToPage(index),
         destinations: bottomNavItemForMobile(context),
       ),
