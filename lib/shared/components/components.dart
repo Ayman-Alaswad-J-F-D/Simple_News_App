@@ -1,26 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/app_cubit/app_cubit.dart';
-import 'package:new_app/app_cubit/app_states.dart';
+
 import '../styles/colors.dart';
 
-Widget myContainer(double? width, double? height) =>
-    BlocBuilder<AppCubit, AppStates>(
-      builder: (context, state) => Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: AppCubit.get(context).isDark
-              ? AppColors.greyS100.withOpacity(.1)
-              : AppColors.greyS100,
-        ),
+class ShimmerContainer extends StatelessWidget {
+  const ShimmerContainer({
+    Key? key,
+    this.width,
+    required this.height,
+    this.isDesktop = false,
+  }) : super(key: key);
+
+  final double? width;
+  final double height;
+  final bool isDesktop;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width == null
+          ? (isDesktop ? 200 : 140)
+          : MediaQuery.of(context).size.width / width!,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        color: Theme.of(context).cardColor,
       ),
     );
+  }
+}
 
 /////////////////////////////
 
-Widget myDivider() => const Padding(
-      padding: EdgeInsets.only(left: 20.0),
-      child: Divider(),
-    );
+SnackBar snackBarMessage({
+  required String Message,
+  int? duration,
+  Color? color,
+  SnackBarAction? actionTextButton,
+}) {
+  return SnackBar(
+    margin: EdgeInsets.all(6),
+    behavior: SnackBarBehavior.floating,
+    content: Text(Message),
+    backgroundColor: color ?? AppColors.primaryColorS300,
+    duration: Duration(seconds: duration ?? 8),
+    action: actionTextButton,
+  );
+}
